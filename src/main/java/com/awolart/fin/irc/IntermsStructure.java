@@ -18,6 +18,10 @@ public class IntermsStructure extends Interms
 
     private double[][] current_data;
 
+    /**
+     * Some text {@latex.inline $x=y^2 + x_n,\\quad n \\in \\mathcal{L}$} and some more text
+     *
+     */
     public IntermsStructure() {
 
     }

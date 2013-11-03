@@ -1,5 +1,5 @@
 /*
- *
+ *  Copyright (c) 2013 AWOLart.com
  */
 
 package com.awolart.fin.irc;
@@ -10,10 +10,10 @@ import java.text.NumberFormat;
  * <p>
  * </p>
  */
-public class SpotsTester
+public class SpotRateFinder
 {
 
-    public SpotsTester() {
+    public SpotRateFinder() {
     }
 
     public static void main(String[] args)
@@ -30,7 +30,6 @@ public class SpotsTester
                 {99.908,3.16},
                 {99.822,3.67},
                 {99.675,4.14},
-                {99.998,0.0},
                 {98.759,4.92}
         };
         double[] answer = spots.spotFcoupon(data);

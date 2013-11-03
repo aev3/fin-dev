@@ -26,16 +26,15 @@ public class Spots
         int n = data.length;
         double[] spots = new double[n];
         double price;
-        int s = 0;
         double index = 1.0;
-        spots[0] = ((100.0/data[0][0]) - 1);
-        price = (data[0][0]/100.0);
-        for(s = 1; s < n; ++s)
+        spots[0] = ( ( 100.0 / data[0][0] ) - 1 );
+        price = ( data[0][0] / 100.0 );
+        for(int i = 1; i < n; ++i)
         {
             index++;
-            spots[s] = (Math.exp(1/index * Math.log((data[s][1] + 100.0)
-                /(data[s][0] - (data[s][1] * price)))) - 1);
-            price += (Math.exp(-index * Math.log(1 + spots[s])));
+            spots[i] = ( Math.exp( 1 / index * Math.log( ( data[i][1] + 100.0 )
+                / ( data[i][0] - ( data[i][1] * price ) ) ) ) - 1);
+            price += ( Math.exp( -index * Math.log( 1 + spots[i] ) ) );
         }
 
         return spots;

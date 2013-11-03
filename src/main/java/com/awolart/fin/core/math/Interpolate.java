@@ -12,7 +12,30 @@ import java.util.*;
  */
 public class Interpolate
 {
-
+    /**
+     * In mathematical optimization, the method of Lagrange multipliers, named
+     * after Joseph Louis Lagrange, is a strategy for finding the local maxima
+     * and minima of a function subject to equality constraints. For instance,
+     * consider the optimization problem
+     * maximize f(x, y)  => subject to g(x, y) = c
+     * We need both f and g to have continuous first partial derivatives.
+     * We introduce a new variable (\\lambda) called a Lagrange multiplier and
+     * study the Lagrange function (or Lagrangian) defined by
+     * Lambda(x,y,\\lambda) = f(x,y) + \\lambda \cdot \\Big(g(x,y)-c\\Big),
+     * where the \\lambda term may be either added or subtracted.
+     * If f(x_0, y_0) is a maximum of f(x,y) for the original constrained problem,
+     * then there exists \\lambda_0 such that (x_0,y_0,\\lambda_0) is a stationary
+     * point for the Lagrange function (stationary points are those points where the
+     * partial derivatives of \Lambda are zero, i.e. \\nabla\s\Lambda = 0).
+     * However, not all stationary points yield a solution of the original problem.
+     * Thus, the method of Lagrange multipliers yields a necessary condition for
+     * optimality in constrained problems. Sufficient conditions for a minimum or
+     * maximum also exist.
+     *
+     * @param valpairs
+     * @param xval
+     * @return
+     */
     public double lagrange(double[][] valpairs, double xval)
     {
         int vp_len = valpairs.length;
@@ -36,6 +59,22 @@ public class Interpolate
 
     }
 
+    /**
+     *
+     * Neville type interpolation fir the given value - xval.
+     * In mathematics, Neville's algorithm is an algorithm used for polynomial
+     * interpolation that was derived by the mathematician Eric Harold Neville.
+     * Given n + 1 points, there is a unique polynomial of degree ≤ n which goes
+     * through the given points. Neville's algorithm evaluates this polynomial.
+     * Neville's algorithm is based on the Newton form of the interpolating polynomial
+     * and the recursion relation for the divided differences.
+     *
+     * @param valpairs
+     *
+     * @param xval
+     *
+     * @return
+     */
     public double neville(double[][] valpairs, double xval)
     {
         // For Positive Values Only //
