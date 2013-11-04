@@ -38,14 +38,14 @@ public class PresentValueTest {
      * @param rate
      * @return
      */
-    public static double LotteryNPV(final int inst, final double pmt, final double rate) {
-        double PV = 0.00;
+    public static double NetPresentValue(final int inst, final double pmt, final double rate) {
+        double NPV = 0.00;
         for (int i = 0; i < inst; ++i) {
             double fv = pmt / Math.pow(1 + rate, i);
-            PV += fv;
+            NPV += fv;
         }
 
-        return PV;
+        return NPV;
     }
 
 
@@ -53,7 +53,7 @@ public class PresentValueTest {
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMaximumFractionDigits(2);
         formatter.setMinimumFractionDigits(2);
-        double LPV = PresentValueTest.LotteryNPV(DEFAULT_INST, DEFAULT_PMT, DEFAULT_RATE);
+        double LPV = PresentValueTest.NetPresentValue(DEFAULT_INST, DEFAULT_PMT, DEFAULT_RATE);
         System.out.println("Present value of lottery = " + formatter.format(LPV));
     }
 

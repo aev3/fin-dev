@@ -72,6 +72,9 @@ public class Intermediation {
         double f = ( ( spot_price_0 * 100 ) - Math.exp(0.5*0.1) );
         System.out.println("F = " + formatter.format(f));
 
+        // f = spot price of asset at t0 - k * e to (T-t)*r
+        double ft = ( ( spot_price_0 * 100 ) - Math.exp(0.5*0.1) );
+        System.out.println("F = " + formatter.format(f));
     }
 
 }
