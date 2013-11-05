@@ -38,7 +38,7 @@ public class ForwardContractSpotPriceTest {
         formatter.setMaximumFractionDigits(2);
         formatter.setMinimumFractionDigits(2);
 
-        /* PS1/Q5 Answer
+        /* PS1/Q5 Answer  */
         int installments = 3;
         double price = 400.00;
         double annual_interest_rate = 0.08;
@@ -50,7 +50,7 @@ public class ForwardContractSpotPriceTest {
 
         System.out.println("Spot = " + formatter.format(spot));
         System.out.println("Spot price = " + formatter.format(price / spot));
-        */
+
 
         /*
          * <p/>
@@ -86,6 +86,16 @@ public class ForwardContractSpotPriceTest {
         System.out.println("st price = " + formatter.format(st_price));
         System.out.println("ans = " + formatter.format(ans));
         //Spots spots = new Spots();
+
+        /*
+        The forward price F0 at the time we entered into the forward contract is given by
+        F0=S0/d(0,T)=S0(1+r/2)2=110.25.
+
+        The forward price Ft at the current time t for a forward contract with expiration 6 months is given by
+        Ft=St/d(t,T)=St(1+r/2)=131.25.
+
+        Therefore, the value is ft=(Ft−F0)d(t,T)=(131.25−110.25)/(1+r/2)=20.
+        */
 
     }
 

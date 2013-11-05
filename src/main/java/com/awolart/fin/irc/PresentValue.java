@@ -223,12 +223,14 @@ public class PresentValue {
         double[] cash_flows2 = {0.00, 0.00, 100.00};
         double NPV2 = PresentValue.netPresentValueOfCashFlowStream(cash_flows2, 0.05);
         System.out.println("Cash Flows2 Discounted Present Value = " + formatter.format(NPV2));
-        double val = (1 / ( 1+0.1 / 2 ) );
 
         NumberFormat iformatter = NumberFormat.getInstance();
         iformatter.setMaximumFractionDigits(2);
         iformatter.setMinimumFractionDigits(6);
-        System.out.println("Value = " + iformatter.format(val));
+        double val = (1 / ( 1 + ( 0.1 / 2 ) ) );
+        System.out.println("Value = " + iformatter.format(100 / val));
+
+        // Then calculate the difference between the current asset price and val.
 
     }
 
