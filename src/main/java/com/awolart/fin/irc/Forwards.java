@@ -15,7 +15,7 @@ public class Forwards {
     }
 
 
-    public static double DollarIntr(double term, double reporate)
+    public static double dollarIntr(double term, double reporate)
     {
         return reporate * (term / 360);
     }

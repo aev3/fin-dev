@@ -10,6 +10,13 @@ import java.text.NumberFormat;
  * <p>
  * This class answers Problem Set 1/Question 7:
  * "Value of a Forward contract at an intermediate time"
+ * <p/>
+ * Suppose we hold a forward contract on a stock with expiration 6 months
+ * from now. We entered into this contract 6 months ago so that when we
+ * entered into the contract, the expiration was T = 1 year. The stock price
+ * 6 months ago was S0 = 100, the current stock price = 125 and the current
+ * interest rate is r = 10% compounded semi-annually.
+ * (This is the same rate that prevailed 6 months ago.)
  * </p>
  */
 public class ForwardContractValueAtIntermediateTime {
@@ -21,7 +28,6 @@ public class ForwardContractValueAtIntermediateTime {
      * The forward price {@latex.inline $ F_t $} at the current time {@latex.inline $ t $} for a forward contract with
      * expiration 6 months is given by {@latex.inline $ F_t = \\frac{S_t}{d(t,T)} = S_t(1+r)^i $}
      * <p/>
-     *
      *
      * @param s double representing the price of the asset at time X
      * @param r double representing the effective interest rate at time X
@@ -69,6 +75,5 @@ public class ForwardContractValueAtIntermediateTime {
                 + formatter.format((s_t - s_0) / (1 + r)));
 
     }
-
 
 }
