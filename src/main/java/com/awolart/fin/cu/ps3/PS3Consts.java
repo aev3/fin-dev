@@ -31,7 +31,7 @@ public class PS3Consts {
     /**
      * Constant value for rate
      */
-    public static final double r    = 0.02;
+    public static final double r    = 0.1194; // 0.02;
     /**
      * Constant value for delta
      */
