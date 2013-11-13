@@ -28,22 +28,6 @@ import java.text.NumberFormat;
 public class Lattice
 {
 
-    static final int ROWS = 11;
-
-    static final int COLS = ROWS;
-
-    static class LatDat
-    {
-
-        double s0;
-
-        int t;
-
-        double up;
-
-        double down;
-    }
-
     public double[][] createMatrix()
     {
         double[][] mx = new double[ROWS][COLS];
@@ -86,8 +70,6 @@ public class Lattice
         NumberFormat formatter = NumberFormat.getInstance();
         Lattice lattice = new Lattice();
         double[][] M = lattice.createMatrix();
-        //Matrix matrix = new Matrix(m);
-        //matrix.show();
         for(int i = ROWS-1; i >= 0; i--) {
             for (int j = 0; j < COLS; j++)
                 System.out.printf("%9.4f ", M[i][j]);
