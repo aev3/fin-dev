@@ -43,7 +43,7 @@ public class PS3Consts {
     /**
      * Constant value for u
      */
-    public static final double u    = 1.0395;
+    public static final double u    = 1.03775; //= 1.0395;
 
     /**
      * Default no argument constructor made private to bar instantiation

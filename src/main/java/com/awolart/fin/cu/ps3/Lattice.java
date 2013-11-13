@@ -12,8 +12,7 @@ import static com.awolart.fin.cu.ps3.PS3Consts.T;
 import static com.awolart.fin.cu.ps3.PS3Consts.u;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -33,14 +32,21 @@ import java.util.List;
  */
 public class Lattice {
 
-    static final int N = 4;
+    static final int N = 10;
+
 
     static class LatDat {
-        double t;
-        double s;
+        double s0;
+        int t;
+        double up;
+        double down;
     }
 
     private List<LatDat> list = new ArrayList<LatDat>();
+
+    private List<List<LatDat>> listList = new ArrayList<List<LatDat>>();
+
+    private Map<Integer, LatDat> map = new HashMap<Integer, LatDat>();
 
     public Lattice() {
         // Default no argument constructor
@@ -50,26 +56,71 @@ public class Lattice {
         for(int i = 0; i <= N; ++i) {
             LatDat LD = new LatDat();
             if(i == 0) {
-               LD.s = S0;
+               LD.s0 = S0;
                LD.t = i;
                list.add(LD);
             }
             else {
-                LD.s = S0 + i;
+                /* For up */
+                LD.up = S0 * Math.pow((u),i);
+                /* For down */
+                LD.down = S0 * Math.pow((1/u),i);
                 LD.t = i;
                 list.add(LD);
+                map.put(i,LD);
             }
         }
     }
 
+    public double[][] createMatrix() {
+        double[][] mx = new double[N][N];
+        for(int i = 0; i <= N; ++i) {
+//            LatDat LD = new LatDat();
+//            if(i == 0) {
+//                LD.s0 = S0;
+//                LD.t = i;
+//                list.add(LD);
+//            }
+//            else {
+//                /* For up */
+//                LD.up = S0 * Math.pow((u),i);
+//                /* For down */
+//                LD.down = S0 * Math.pow((1/u),i);
+//                LD.t = i;
+//                list.add(LD);
+//                map.put(i,LD);
+//            }
+            for(int j = 0; j < list.size(); ++j)  {
+                if(i == 0 && j == 0)  {
+                    mx[0][0] = S0;
+                }
+                else {
+                    mx[i][j] = 1.2 * j;
+                }
+
+
+            }
+        }
+
+
+        return mx;
+    }
+
     public static void main(String[] args)
     {
-        NumberFormat formatter = NumberFormat.getInstance();
-        Lattice l = new Lattice();
-        l.createLattice();
-        for(LatDat idx : l.list)  {
-            System.out.println("Data: s = " + idx.s + " and t = " + idx.t);
-        }
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+        Lattice lattice = new Lattice();
+        lattice.createMatrix();
+//        lattice.createLattice();
+//        for(LatDat idx : lattice.list)  {
+//            System.out.println("Data: up = " + formatter.format(idx.up)
+//                    + " down = "  + formatter.format(idx.down)
+//                    + " and t = " + idx.t);
+//        }
+//        for(Map.Entry<Integer, LatDat> entry : lattice.map.entrySet()) {
+//            System.out.println("Key = " + entry.getKey() + ", Value up = "
+//                    + entry.getValue().up + " Value down = " + entry.getValue().down);
+//        }
     }
 
 }
