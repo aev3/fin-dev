@@ -4,6 +4,7 @@
 
 package com.awolart.fin.cu.ps3;
 
+import static com.awolart.fin.cu.ps3.PS3Consts.EoC_ROWS;
 import static com.awolart.fin.cu.ps3.PS3Consts.S0;
 import static com.awolart.fin.cu.ps3.PS3Consts.u;
 
@@ -31,10 +32,6 @@ public class Lattice
     double[][] stk_latt;
 
     double[][] opt_latt;
-
-    private static final int ROWS = 11;
-
-    private static final int COLS = ROWS;
 
     public double[][] createStockLattice(int rows, int cols, double s0,
             double up)
@@ -89,14 +86,28 @@ public class Lattice
         t3,r2 = MAX(stk_latt[3][2] - Strike Price, 0)
         t3,r1 = MAX(stk_latt[3][1] - Strike Price, 0)
         t3,r0 = MAX(stk_latt[3][0] - Strike Price, 0)
+        */
+        // First, calculate the values for column N
+//        for(int i = EoC_ROWS; i > 0; --i)
+//        {
+//            opt_latt[i-1][i-1] = Math.max(stk_latt[i][i] - s, 0.0);
+//            System.out.println("opt_latt[cols][i] =" + opt_latt[i-1][i-1]);
+//        }
 
+        /*
+        t2,r3 = 0.000 //(q * opt_latt[3][3]) + (1-q) * opt_latt[3][2]) / R
         t2,r2 = (q * opt_latt[3][3]) + (1-q) * opt_latt[3][2]) / R
         t2,r1 = (q * opt_latt[3][2]) + (1-q) * opt_latt[3][1]) / R
         t2,r0 = (q * opt_latt[3][1]) + (1-q) * opt_latt[3][0]) / R
 
+        t1,r3 = 0.000 //(q * opt_latt[2][2] + (1-q) * opt_latt[2][1]) / R
+        t1,r2 = 0.000 //(q * opt_latt[2][2] + (1-q) * opt_latt[2][1]) / R
         t1,r1 = (q * opt_latt[2][2] + (1-q) * opt_latt[2][1]) / R
         t1,r0 = (q * opt_latt[2][1] + (1-q) * opt_latt[2][0]) / R
 
+        t0,r3 =  0.000 //(q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
+        t0,r2 =  0.000 //(q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
+        t0,r1 =  0.000 //(q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
         t0,r0 = (q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
         */
         for(int i = rows-1; i > 0 ; --i)
@@ -106,6 +117,19 @@ public class Lattice
                 if(j == cols-1)
                 {
                     opt_latt[i][j] = Math.max(stk_latt[i][j] - s, 0.0);
+                    System.out.println("opt_latt[i][j] = " + opt_latt[i][j]);
+                }
+                else
+                {
+                    /// ((0.5570*22.504) + (1-0.5570) * 7.00)/1.01
+                    System.out.println("stk_latt[3][3] = " + stk_latt[3][3]);
+                    System.out.println("stk_latt[2][3] = " + stk_latt[2][3]);
+                    opt_latt[2][2] = ((0.5570 * opt_latt[3][3]) + (1.0 - 0.5570) * opt_latt[3][2]) / r;
+                    opt_latt[2][1] = ((0.5570 * opt_latt[3][2]) + (1.0 - 0.5570) * opt_latt[3][1]) / r;
+                    opt_latt[2][0] = ((0.5570 * opt_latt[3][1]) + (1.0 - 0.5570) * opt_latt[3][0]) / r;
+                    opt_latt[1][1] = ((0.5570 * opt_latt[2][2]) + (1.0 - 0.5570) * opt_latt[2][1]) / r;
+                    opt_latt[1][0] = ((0.5570 * opt_latt[2][1]) + (1.0 - 0.5570) * opt_latt[2][0]) / r;
+                    opt_latt[0][0] = ((0.5570 * opt_latt[1][1]) + (1.0 - 0.5570) * opt_latt[1][0]) / r;
                 }
 //                else
 //                {
@@ -125,45 +149,45 @@ public class Lattice
         return opt_latt;
     }
 
-    public double[][] createStockLattice()
-    {
-        double[][] mx = new double[ROWS][COLS];
-        for(int i = 0; i <= mx.length; ++i)
-        {
-            if(i == 0)
-            {
-                mx[0][0] = S0;
-                System.out.println("mx [0][0] \t = \t" + mx[0][0]);
-                for(int k = 1; k < mx.length; ++k)
-                {
-                    mx[i][k] = S0 * Math.pow((1 / u), k);
-                    System.out.println("mx [" + i + "][" + k + "] \t = \t"
-                            + mx[i][k]);
-                }
-            }
-            else
-            {
-                int limit = mx[i - 1].length;
-                for(int j = i; j < limit; ++j)
-                {
-                    if(j == i)
-                    {
-                        mx[i][j] = S0 * Math.pow((u), j);
-                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
-                                + mx[i][j]);
-                    }
-                    else
-                    {
-                        mx[i][j] = (mx[i - 1][j - 1]) * u;
-                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
-                                + mx[i][j]);
-                    }
-                }
-            }
-        }
-
-        return mx;
-    }
+//    public double[][] createStockLattice()
+//    {
+//        double[][] mx = new double[ROWS][COLS];
+//        for(int i = 0; i <= mx.length; ++i)
+//        {
+//            if(i == 0)
+//            {
+//                mx[0][0] = S0;
+//                System.out.println("mx [0][0] \t = \t" + mx[0][0]);
+//                for(int k = 1; k < mx.length; ++k)
+//                {
+//                    mx[i][k] = S0 * Math.pow((1 / u), k);
+//                    System.out.println("mx [" + i + "][" + k + "] \t = \t"
+//                            + mx[i][k]);
+//                }
+//            }
+//            else
+//            {
+//                int limit = mx[i - 1].length;
+//                for(int j = i; j < limit; ++j)
+//                {
+//                    if(j == i)
+//                    {
+//                        mx[i][j] = S0 * Math.pow((u), j);
+//                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
+//                                + mx[i][j]);
+//                    }
+//                    else
+//                    {
+//                        mx[i][j] = (mx[i - 1][j - 1]) * u;
+//                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
+//                                + mx[i][j]);
+//                    }
+//                }
+//            }
+//        }
+//
+//        return mx;
+//    }
 
     /**
      * Calculating the fair value of an European Option (Eo) in a 1 period
