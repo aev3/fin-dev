@@ -49,4 +49,16 @@ public class PS3Consts {
      * Default no argument constructor made private to bar instantiation
      */
     private PS3Consts() { /* No instantiation, no calls. */ }
+
+    public static final int EoC_ROWS    = 4;
+    public static final int EoC_COLS    = 4;
+    public static final double EoC_T    = 0.50;
+    public static final double EoC_S0   = 100.00;
+    public static final double EoC_r    = 1.01;
+    public static final double EoC_c    = 0.01;
+    public static final double EoC_UP   = 1.07;
+    public static final double EoC_d    = 0.93458;
+    public static final double EoC_q    = 0.5570;
+    public static final double EoC_STR  = 100.00;
+
 }
