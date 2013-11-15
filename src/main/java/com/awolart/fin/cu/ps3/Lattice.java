@@ -29,165 +29,108 @@ import java.text.NumberFormat;
 public class Lattice
 {
 
-    double[][] stk_latt;
+    double[][] stk_lat;
 
-    double[][] opt_latt;
+    double[][] opt_lat;
 
     public double[][] createStockLattice(int rows, int cols, double s0,
             double up)
     {
-        stk_latt = new double[rows][cols];
-        for(int i = 0; i <= stk_latt.length; ++i)
+        stk_lat = new double[rows][cols];
+        for(int i = 0; i <= stk_lat.length; ++i)
         {
             if(i == 0)
             {
-                stk_latt[0][0] = s0;
-                System.out.println("mx [0][0] \t = \t" + stk_latt[0][0]);
-                for(int k = 1; k < stk_latt.length; ++k)
+                stk_lat[0][0] = s0;
+
+                for(int k = 1; k < stk_lat.length; ++k)
                 {
-                    stk_latt[i][k] = S0 * Math.pow((1 / up), k);
-                    System.out.println("mx [" + i + "][" + k + "] \t = \t"
-                            + stk_latt[i][k]);
+                    stk_lat[i][k] = S0 * Math.pow((1 / up), k);
                 }
             }
             else
             {
-                int limit = stk_latt[i - 1].length;
+                int limit = stk_lat[i - 1].length;
                 for(int j = i; j < limit; ++j)
                 {
                     if(j == i)
                     {
-                        stk_latt[i][j] = s0 * Math.pow((up), j);
-                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
-                                + stk_latt[i][j]);
+                        stk_lat[i][j] = s0 * Math.pow((up), j);
                     }
                     else
                     {
-                        stk_latt[i][j] = (stk_latt[i - 1][j - 1]) * up;
-                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
-                                + stk_latt[i][j]);
+                        stk_lat[i][j] = (stk_lat[i - 1][j - 1]) * up;
                     }
                 }
             }
         }
 
-        return stk_latt;
+        return stk_lat;
     }
 
     public double[][] createOptionLattice(int rows, int cols, double q,
-            double r, double s)
+                                          double r, double s)
     {
-
-        opt_latt = new double[rows][cols];
-
         /*
-        Call stack:
-        t3,r3 = MAX(stk_latt[3][3] - Strike Price, 0)
-        t3,r2 = MAX(stk_latt[3][2] - Strike Price, 0)
-        t3,r1 = MAX(stk_latt[3][1] - Strike Price, 0)
-        t3,r0 = MAX(stk_latt[3][0] - Strike Price, 0)
-        */
-        // First, calculate the values for column N
-//        for(int i = EoC_ROWS; i > 0; --i)
-//        {
-//            opt_latt[i-1][i-1] = Math.max(stk_latt[i][i] - s, 0.0);
-//            System.out.println("opt_latt[cols][i] =" + opt_latt[i-1][i-1]);
-//        }
+         * Initialize the opt_lat two dimensional matrix.
+         */
+        opt_lat = new double[rows][cols];
 
-        /*
-        t2,r3 = 0.000 //(q * opt_latt[3][3]) + (1-q) * opt_latt[3][2]) / R
-        t2,r2 = (q * opt_latt[3][3]) + (1-q) * opt_latt[3][2]) / R
-        t2,r1 = (q * opt_latt[3][2]) + (1-q) * opt_latt[3][1]) / R
-        t2,r0 = (q * opt_latt[3][1]) + (1-q) * opt_latt[3][0]) / R
-
-        t1,r3 = 0.000 //(q * opt_latt[2][2] + (1-q) * opt_latt[2][1]) / R
-        t1,r2 = 0.000 //(q * opt_latt[2][2] + (1-q) * opt_latt[2][1]) / R
-        t1,r1 = (q * opt_latt[2][2] + (1-q) * opt_latt[2][1]) / R
-        t1,r0 = (q * opt_latt[2][1] + (1-q) * opt_latt[2][0]) / R
-
-        t0,r3 =  0.000 //(q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
-        t0,r2 =  0.000 //(q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
-        t0,r1 =  0.000 //(q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
-        t0,r0 = (q * opt_latt[1][1] + (1-q) * opt_latt[1][0]) / R
-        */
-        for(int i = rows-1; i > 0 ; --i)
+        for(int row = 0; row < opt_lat.length; ++row)
         {
-            for(int j = cols-1; j > 0 ; --j)
+            /* Define the last column data rows using the data from the stk_lat lattice */
+            int columm = cols-1;
+            opt_lat[row][columm] = Math.max(stk_lat[row][columm] - s, 0.0);
+            //System.out.println("opt_lat[" + columm + "][" + row + "] = " + opt_lat[row][columm]);
+        }
+
+
+        /**
+         * Build remaining portion of opt_lat by iterating from [rows-1][cols-1] to [0][0]
+         * because data required for defining [row][col] is in [row+1]
+         */
+        for(int row = rows-2; row >= 0 ; --row)
+        {
+            for(int col = cols-2; col >= 0 ; --col)
             {
-                if(j == cols-1)
-                {
-                    opt_latt[i][j] = Math.max(stk_latt[i][j] - s, 0.0);
-                    System.out.println("opt_latt[i][j] = " + opt_latt[i][j]);
-                }
-                else
-                {
-                    /// ((0.5570*22.504) + (1-0.5570) * 7.00)/1.01
-                    System.out.println("stk_latt[3][3] = " + stk_latt[3][3]);
-                    System.out.println("stk_latt[2][3] = " + stk_latt[2][3]);
-                    opt_latt[2][2] = ((0.5570 * opt_latt[3][3]) + (1.0 - 0.5570) * opt_latt[3][2]) / r;
-                    opt_latt[2][1] = ((0.5570 * opt_latt[3][2]) + (1.0 - 0.5570) * opt_latt[3][1]) / r;
-                    opt_latt[2][0] = ((0.5570 * opt_latt[3][1]) + (1.0 - 0.5570) * opt_latt[3][0]) / r;
-                    opt_latt[1][1] = ((0.5570 * opt_latt[2][2]) + (1.0 - 0.5570) * opt_latt[2][1]) / r;
-                    opt_latt[1][0] = ((0.5570 * opt_latt[2][1]) + (1.0 - 0.5570) * opt_latt[2][0]) / r;
-                    opt_latt[0][0] = ((0.5570 * opt_latt[1][1]) + (1.0 - 0.5570) * opt_latt[1][0]) / r;
-                }
-//                else
-//                {
-//                    //for(int j = cols-1; j > 0;--j)
-//                    while(j != 0)
-//                    {
-//                        int ROW = j; int COL = j;
-//                        double R3C3 = opt_latt[COL+1][ROW+1]; double R3C2 = opt_latt[COL+1][ROW];
-//                        double R2C1 = opt_latt[COL][ROW-1];
-//                        opt_latt[i][j+1] = (q * opt_latt[j+1][j+1]) + (1.0-q) * (opt_latt[j+1][j] / r);
-//                        --j;
-//                    }
-//                }
+                opt_lat[row][col] = ((q * opt_lat[row+1][col+1]) + (1.0 - q) * opt_lat[row][col+1])/r;
+                //System.out.println("D: opt_lat[" + row + "][" + col + "] = " + opt_lat[col][row]);
             }
         }
 
-        return opt_latt;
+
+        return opt_lat;
     }
 
-//    public double[][] createStockLattice()
-//    {
-//        double[][] mx = new double[ROWS][COLS];
-//        for(int i = 0; i <= mx.length; ++i)
-//        {
-//            if(i == 0)
-//            {
-//                mx[0][0] = S0;
-//                System.out.println("mx [0][0] \t = \t" + mx[0][0]);
-//                for(int k = 1; k < mx.length; ++k)
-//                {
-//                    mx[i][k] = S0 * Math.pow((1 / u), k);
-//                    System.out.println("mx [" + i + "][" + k + "] \t = \t"
-//                            + mx[i][k]);
-//                }
-//            }
-//            else
-//            {
-//                int limit = mx[i - 1].length;
-//                for(int j = i; j < limit; ++j)
-//                {
-//                    if(j == i)
-//                    {
-//                        mx[i][j] = S0 * Math.pow((u), j);
-//                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
-//                                + mx[i][j]);
-//                    }
-//                    else
-//                    {
-//                        mx[i][j] = (mx[i - 1][j - 1]) * u;
-//                        System.out.println("mx [" + i + "][" + j + "] \t = \t"
-//                                + mx[i][j]);
-//                    }
-//                }
-//            }
-//        }
-//
-//        return mx;
-//    }
+
+    public double[][] createOptionLattice2(int rows, int cols, double q,
+                                          double r, double s)
+    {
+
+        opt_lat = new double[rows][cols];
+
+        for(int i = cols; i >= 0 ; --i)
+        {
+            for(int j = rows; j >= 0 ; --j)
+            {
+                opt_lat[i][j] = Math.max(stk_lat[i][j] - s, 0.0);
+                //System.out.println("O: opt_lat[" + i + "][" + j + "] = " + opt_lat[i][j]);
+            }
+        }
+
+        for(int i = cols; i >= 0 ; --i)
+        {
+            for(int j = rows; j >= 0 ; --j)
+            {
+
+                opt_lat[i][j] = ((0.5570 * opt_lat[i+1][j+1]) + (1.0 - 0.5570) * opt_lat[i+1][j])/1.01;
+                //System.out.println("I: opt_lat[" + i + "][" + j + "] = " + opt_lat[i][j]);
+            }
+        }
+
+        return opt_lat;
+    }
+
 
     /**
      * Calculating the fair value of an European Option (Eo) in a 1 period
@@ -200,36 +143,85 @@ public class Lattice
         return fv;
     }
 
+
     public static void main(String[] args)
     {
         NumberFormat formatter = NumberFormat.getInstance();
         Lattice lattice = new Lattice();
-        // double[][] M = lattice.createStockLattice();
-        // for(int i = ROWS-1; i >= 0; i--) {
-        // for (int j = 0; j < COLS; j++)
-        // System.out.printf("%9.4f ", M[i][j]);
-        // System.out.println();
-        // }
+
         double[][] EoCM = lattice.createStockLattice(PS3Consts.EoC_ROWS,
                 PS3Consts.EoC_COLS, PS3Consts.EoC_S0, PS3Consts.EoC_UP);
-        for(int i = PS3Consts.EoC_ROWS - 1; i >= 0; i--)
+        /*          */
+        System.out.println("Stock Lattice from [0][0] to [3][3]:");
+        for(int i = 0; i < PS3Consts.EoC_ROWS; ++i)
         {
-            for(int j = 0; j < PS3Consts.EoC_COLS; j++)
-                System.out.printf("S %9.4f ", EoCM[i][j]);
+            for(int j = 0; j < PS3Consts.EoC_COLS; ++j)
+            {
+                System.out.print("[" + i + "][" + j + "] =");
+                System.out.printf("%9.4f ", EoCM[i][j]);
+            }
             System.out.println();
         }
-        /*
-        (int rows, int cols, double q,
-            double r, double s)
-         */
+        System.out.println();
+
+
+        /*         */
         double[][] EoC_OL = lattice.createOptionLattice(PS3Consts.EoC_ROWS,
                 PS3Consts.EoC_COLS, PS3Consts.EoC_q, PS3Consts.EoC_r, PS3Consts.EoC_STR);
-        for(int i = PS3Consts.EoC_ROWS - 1; i >= 0; i--)
+        System.out.println("Option Lattice from [0][0] to [3][3]:");
+        for(int i = 0; i < PS3Consts.EoC_ROWS; ++i)
         {
-            for(int j = 0; j < PS3Consts.EoC_COLS; j++)
-                System.out.printf("O %9.4f ", EoC_OL[i][j]);
+            for(int j = 0; j < PS3Consts.EoC_COLS; ++j)
+            {
+                System.out.print("[" + i + "][" + j + "] =");
+                System.out.printf("%9.4f ", EoC_OL[i][j]);
+            }
             System.out.println();
         }
+
+    }
+
+
+    public void printCanonicalOptionLattice() {
+
+        opt_lat = new double[PS3Consts.EoC_ROWS][PS3Consts.EoC_COLS];
+
+        double q = PS3Consts.EoC_q;
+        double r = PS3Consts.EoC_r;
+
+        opt_lat[3][3] = Math.max(stk_lat[3][3] - 100, 0.0);
+        System.out.println("opt_lat[3][3] = " + opt_lat[3][3]);
+        opt_lat[3][2] = Math.max(stk_lat[2][3] - 100, 0.0);
+        System.out.println("opt_lat[3][2] = " + opt_lat[3][2]);
+        opt_lat[3][1] = Math.max(stk_lat[1][3] - 100, 0.0);
+        System.out.println("opt_lat[3][1] = " + opt_lat[3][1]);
+        opt_lat[3][0] = Math.max(stk_lat[0][3] - 100, 0.0);
+        System.out.println("opt_lat[3][0] = " + opt_lat[3][0]);
+        System.out.println();
+
+        opt_lat[2][2] = ((q * opt_lat[3][3]) + (1.0 - q) * opt_lat[3][2])/r;
+        System.out.println("opt_lat[2][2] = " + opt_lat[2][2]);
+        opt_lat[2][1] = ((q * opt_lat[3][2]) + (1.0 - q) * opt_lat[3][1])/r;
+        System.out.println("opt_lat[2][1] = " + opt_lat[2][1]);
+        opt_lat[2][0] = ((q * opt_lat[3][1]) + (1.0 - q) * opt_lat[3][0])/r;
+        System.out.println("opt_lat[2][0] = " + opt_lat[2][0]);
+        System.out.println();
+
+        opt_lat[1][2] = ((q * opt_lat[2][3]) + (1.0 - q) * opt_lat[2][2])/r;
+        System.out.println("opt_lat[1][2]  = " + opt_lat[1][2] );
+        opt_lat[1][1] = ((q * opt_lat[2][2]) + (1.0 - q) * opt_lat[2][1])/r;
+        System.out.println("opt_lat[1][1]  = " + opt_lat[1][1] );
+        opt_lat[1][0] = ((q * opt_lat[2][1]) + (1.0 - q) * opt_lat[2][0])/r;
+        System.out.println("opt_lat[1][0]  = " + opt_lat[1][0] );
+        System.out.println();
+
+        opt_lat[0][2] = ((q * opt_lat[1][3]) + (1.0 - q) * opt_lat[1][2])/r;
+        System.out.println("opt_lat[0][2]  = " + opt_lat[0][0] );
+        opt_lat[0][1] = ((q * opt_lat[1][2]) + (1.0 - q) * opt_lat[1][1])/r;
+        System.out.println("opt_lat[0][1]  = " + opt_lat[0][0] );
+        opt_lat[0][0] = ((q * opt_lat[1][1]) + (1.0 - q) * opt_lat[1][0])/r;
+        System.out.println("opt_lat[0][0]  = " + opt_lat[0][0] );
+        System.out.println();
     }
 
 }
