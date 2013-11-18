@@ -149,4 +149,44 @@ public class EuropeanOptions
 
     }
 
+    public double[][] createPricingLattice(int rows, int cols, double q,
+                                              double r, double s)
+    {
+        /*
+         * Initialize the opt_lat two dimensional matrix.
+         */
+        opt_lat = new double[rows][cols];
+
+        /*
+         * For this first column use max((strike - stk_lat[row][col]), 0.0)
+         */
+        for(int row = 0; row < rows; ++row)
+        {
+            /* Define the last column data rows using the data from the stk_lat lattice */
+            int column = cols-1;
+            opt_lat[row][column] = Math.max(s - stk_lat[row][column], 0.0);
+        }
+
+
+        /*
+         * Build remaining portion of opt_lat by iterating from [rows-1][cols-1] to [0][0]
+         * because data required for defining [row][col] is in [row+1]
+         * At row[0], col[2] use
+         * (Math.max(Math.max((s - stk_lat[0][2]),0.0), (q*opt_lat[0][0] +  (1-q)* opt_lat[0][0])/r
+         */
+        for(int i = rows-2; i >= 0; --i) {
+            for(int j = cols-2; j >= 0; --j) {
+                double MM;
+                if(stk_lat[i][j] == 0.0 || stk_lat[i][j] < 0) {
+                    MM = Math.max((q*opt_lat[i+1][j]+(1-q)*opt_lat[i][j])*(1/r), 0.0);
+                } else {
+                    MM = Math.max(Math.max((s-stk_lat[i][j]),0.0),(q*opt_lat[i+1][j+1]+(1-q)*opt_lat[i][j+1])*(1/r));
+                }
+                opt_lat[i][j] = MM;
+            }
+        }
+
+        return opt_lat;
+    }
+
 }
