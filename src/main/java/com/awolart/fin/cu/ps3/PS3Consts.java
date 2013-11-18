@@ -70,20 +70,33 @@ public class PS3Consts {
      *  S0=100,
      *  r=2%,
      *  σ=30%, and
-     *  dividend yield of
-     *  c=1%.
+     *  dividend yield c=0.01
      *  u=1.0395
      */
-    public static final int AO_15_ROWS      = 16;
-    public static final int AO_15_COLS      = 16;
-    public static final double AO_15_S0     = 100.00;
-    public static final double AO_15_R      = 1.02;
-    public static final double AO_15_U      = 1.0395;
-    public static final double AO_15_Q      = 0.5570;
-    public static final double AO_15_K      = 110.00;
-    public static final double AO_15_C      = 1.01;
-    public static final double AO_15_sigma  = 0.25;
-    public static final double AO_15_T      = 0.25;
+    public static final int APO_15_ROWS     = 16;
+    public static final int APO_15_COLS     = 16;
+    public static final double APO_15_S0    = 100.00;
+    public static final double APO_15_R     = 1.02;
+    public static final double APO_15_U     = 1.0395;
+    public static final double APO_15_D     = 1/APO_15_U;
+    public static final double APO_15_Q     = 0.5570;
+    public static final double APO_15_K     = 110.00;
+    public static final double APO_15_C     = 1.01;
+    public static final double APO_15_sigma = 0.25;
+    public static final double APO_15_T     = 0.25;
+
+    public static final int APO_4_ROWS      = 4;
+    public static final int APO_4_COLS      = 4;
+    public static final double APO_4_S0     = 100.00;
+    public static final double APO_4_R      = 1.01;
+    public static final double APO_4_U      = 1.0700;
+    public static final double APO_4_D      = 1/APO_4_U;
+    public static final double APO_4_Q      = 0.5570;
+    public static final double APO_4_STR    = 100.00;
+    public static final double APO_4_C      = 0.00;
+    public static final double APO_4_sigma  = 0.25;
+    public static final double APO_4_T      = 0.25;
+
 
     public static final int EO_4_ROWS      = 4;
     public static final int EO_4_COLS      = 4;
@@ -108,17 +121,5 @@ public class PS3Consts {
     public static final double EO_10_C      = 0.00;
     public static final double EO_10_sigma  = 0.25;
     public static final double EO_10_T      = 0.25;
-
-    public static final int APO_4_ROWS      = 4;
-    public static final int APO_4_COLS      = 4;
-    public static final double APO_4_S0     = 100.00;
-    public static final double APO_4_R      = 1.01;
-    public static final double APO_4_U      = 1.0700;
-    public static final double APO_4_D      = 1/APO_4_U;
-    public static final double APO_4_Q      = 0.5570;
-    public static final double APO_4_STR    = 100.00;
-    public static final double APO_4_C      = 0.00;
-    public static final double APO_4_sigma  = 0.25;
-    public static final double APO_4_T      = 0.25;
 
 }
