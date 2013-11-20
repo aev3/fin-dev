@@ -110,16 +110,16 @@ public class PS3Consts {
     public static final double ECO_4_sigma  = 0.25;
     public static final double ECO_4_T      = 0.25;
 
-    public static final int EPO_10_ROWS      = 11;
-    public static final int EPO_10_COLS      = 11;
-    public static final double EPO_10_S0     = 100.00;
-    public static final double EPO_10_R      = 1.1194;
-    public static final double EPO_10_U      = 1.03775;
-    public static final double EPO_10_D      = 1/EPO_10_U;
-    public static final double EPO_10_Q      = 0.5311;
-    public static final double EPO_10_STR    = 100.00;
-    public static final double EPO_10_C      = 0.00;
-    public static final double EPO_10_sigma  = 0.25;
-    public static final double EPO_10_T      = 0.25;
+    public static final int ECO_10_ROWS      = 11;
+    public static final int ECO_10_COLS      = 11;
+    public static final double ECO_10_S0     = 100.00;
+    public static final double ECO_10_R      = 1.1194;
+    public static final double ECO_10_U      = 1.03775396831015;
+    public static final double ECO_10_D      = 1/ECO_10_U;
+    public static final double ECO_10_Q      = 0.53106460663028;
+    public static final double ECO_10_STR    = 100.00;
+    public static final double ECO_10_C      = 0.00;
+    public static final double ECO_10_sigma  = 0.25;
+    public static final double ECO_10_T      = 0.25;
 
 }

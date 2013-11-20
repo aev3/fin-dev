@@ -30,6 +30,42 @@ public class EuropeanOptions
     double[][] opt_lat;
 
     public double[][] createStockLattice(int rows, int cols, double s0,
+                                         double up)
+    {
+        stk_lat = new double[rows][cols];
+        //rev_lat = new double[rows][cols];
+
+        for(int i = 0; i <= stk_lat.length; ++i)
+        {
+            if(i > 0)
+            {
+                int limit = stk_lat[i-1].length;
+                for(int j = i; j < limit; ++j)
+                {
+                    if(j == i)
+                    {
+                        stk_lat[i][j] = s0 * Math.pow((up), j);
+                    }
+                    else
+                    {
+                        stk_lat[i][j] = (stk_lat[i-1][j-1]) * up;
+                    }
+                }
+            }
+            else if(i == 0)
+            {
+                stk_lat[0][0] = s0;
+
+                for(int k = 1; k < stk_lat.length; ++k)
+                {
+                    stk_lat[i][k] = S0 * Math.pow((1/up), k);
+                }
+            }
+        }
+
+        return stk_lat;
+    }
+    public double[][] createStockLattice2(int rows, int cols, double s0,
             double up)
     {
         stk_lat = new double[rows][cols];
@@ -183,10 +219,14 @@ public class EuropeanOptions
     public double[][] createPutPayoffLattice(int rows, int cols, double q, double r,
             double s, double T)
     {
-        double[][] po_lat = new double[rows][cols];
+        double[][] pay_lat = new double[rows][cols];
 
         /*
-         * For this first column use max((strike - stk_lat[row][col]), 0.0)
+         * For this first column use max((strike - stk_lat[row][col]), 0.0
+         * XL=MAX($G$2*(L16-$G$3),0))
+         * G2=1 (call/put)
+         * G3=strike=100
+         * L16=stk_lat[R_n, C_n]
          */
         for(int row = 0; row < rows; ++row)
         {
@@ -194,36 +234,53 @@ public class EuropeanOptions
              * Define the last column data rows using the data from the stk_lat
              * lattice
              */
-            int column = cols - 1;
-            po_lat[row][column] = Math.max(s - stk_lat[row][column], 0.0);
+            int col = cols-1;
+            //pay_lat[row][col] = Math.max(s - stk_lat[row][col], 0.0);
+            pay_lat[row][col] = Math.max((stk_lat[row][col])-s, 0.0);
         }
 
         /*
          * For Row 5[XL=36] and Col 9[XL=30]:
          * =IF($A36 <= K$30, ($B$10*L35+$B$11*L36)/EXP($B$6 * $B$3/$B$5),"")
+         * A36=R_n
+         * K30=C_n
          *
          */
-        for(int row = 0; row <= rows-2; ++row)
+        //for(int row = 0; row <= rows-2; ++row)
+        for(int row = rows-2; row >= 0; --row)
         {
             for(int col = cols-2; col >= 0; --col)
             {
                 if(row <= col)
                 {
-                    double num_left = q * po_lat[row+1][col+1];
-                    double num_right = (1-q) * po_lat[row][col+1];
-                    double denom = r * (T / (cols-1) );
-                    po_lat[row][col] =
-                            (num_left + num_right)/Math.exp(denom);
+                    /* constant */
+                    int periods =  cols-1;
+                    double q_less = 1-q;
+                    double denom = Math.exp(r * T / periods );
+                    //System.out.println("EXP = " + denom + ", where r = " + r
+                    //        + ", T = " + T + ", and periods = " + periods);
+                    /* variable */
+                    double num_left = q * pay_lat[row+1][col+1];
+                    double num_right = q_less * pay_lat[row][col+1];
+                    //double num_left = q * pay_lat[row-1][col-1];
+                    //double num_right = q_less * pay_lat[row][col-1];
+                    pay_lat[row][col] = (num_left + num_right)/denom;
+                    System.out.println("[" + row + "][" + col + "]:"
+                            + " num_right = " + num_right
+                            + ", num_left = " + num_left
+                            + ", denom = " + denom
+                            + ", and pay_lat[row][col] = " + pay_lat[row][col]
+                            );
                 }
                 else
                 {
-                    po_lat[row][col] = 0.0;
+                    pay_lat[row][col] = 0.0;
                 }
             }
 
         }
 
-        return po_lat;
+        return pay_lat;
 
     }
 
