@@ -98,28 +98,28 @@ public class PS3Consts {
     public static final double APO_4_T      = 0.25;
 
 
-    public static final int EO_4_ROWS      = 4;
-    public static final int EO_4_COLS      = 4;
-    public static final double EO_4_S0     = 100.00;
-    public static final double EO_4_R      = 1.01;
-    public static final double EO_4_U      = 1.0700;
-    public static final double EO_4_D      = 1/EO_4_U;
-    public static final double EO_4_Q      = 0.5570;
-    public static final double EO_4_STR    = 100.00;
-    public static final double EO_4_C      = 0.00;
-    public static final double EO_4_sigma  = 0.25;
-    public static final double EO_4_T      = 0.25;
+    public static final int ECO_4_ROWS      = 4;
+    public static final int ECO_4_COLS      = 4;
+    public static final double ECO_4_S0     = 100.00;
+    public static final double ECO_4_R      = 1.01;
+    public static final double ECO_4_U      = 1.0700;
+    public static final double ECO_4_D      = 1/ECO_4_U;
+    public static final double ECO_4_Q      = 0.5570;
+    public static final double ECO_4_STR    = 100.00;
+    public static final double ECO_4_C      = 0.00;
+    public static final double ECO_4_sigma  = 0.25;
+    public static final double ECO_4_T      = 0.25;
 
-    public static final int EO_10_ROWS      = 11;
-    public static final int EO_10_COLS      = 11;
-    public static final double EO_10_S0     = 100.00;
-    public static final double EO_10_R      = 1.1194;
-    public static final double EO_10_U      = 1.03775;
-    public static final double EO_10_D      = 1/EO_10_U;
-    public static final double EO_10_Q      = 0.5311;
-    public static final double EO_10_STR    = 100.00;
-    public static final double EO_10_C      = 0.00;
-    public static final double EO_10_sigma  = 0.25;
-    public static final double EO_10_T      = 0.25;
+    public static final int EPO_10_ROWS      = 11;
+    public static final int EPO_10_COLS      = 11;
+    public static final double EPO_10_S0     = 100.00;
+    public static final double EPO_10_R      = 1.1194;
+    public static final double EPO_10_U      = 1.03775;
+    public static final double EPO_10_D      = 1/EPO_10_U;
+    public static final double EPO_10_Q      = 0.5311;
+    public static final double EPO_10_STR    = 100.00;
+    public static final double EPO_10_C      = 0.00;
+    public static final double EPO_10_sigma  = 0.25;
+    public static final double EPO_10_T      = 0.25;
 
 }

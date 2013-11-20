@@ -1,14 +1,16 @@
 /*
  *  Copyright (c) 2013 AWOLart.com
+ *  -header
+ *  '<script type="text/javascript"
+ *  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+ *  </script>'
+
  */
 
 package com.awolart.fin.cu.ps3;
 
-import static com.awolart.fin.cu.ps3.PS3Consts.EoC_ROWS;
 import static com.awolart.fin.cu.ps3.PS3Consts.S0;
-import static com.awolart.fin.cu.ps3.PS3Consts.u;
 
-import java.text.NumberFormat;
 
 /**
  * <p>
@@ -71,7 +73,7 @@ public class AmericanOptions
     }
 
 
-    public double[][] createOptionLattice(int rows, int cols, double q,
+    public double[][] createCallOptionLattice(int rows, int cols, double q,
                                           double r, double s)
     {
         /*
@@ -106,7 +108,7 @@ public class AmericanOptions
 
 
 
-    public double[][] createPutPricingLattice(int rows, int cols, double q,
+    public double[][] createPutOptionLattice(int rows, int cols, double q,
                                               double r, double s)
     {
         /*
@@ -218,6 +220,23 @@ public class AmericanOptions
 
     public static void main(String[] args)
     {
+        double q = 0.5570;
+        double oneq = 1-q;
+        double value = ( Math.pow(q,3) + (3 * q * Math.pow(oneq,2)) + (3 * q * Math.pow(oneq,2)) + Math.pow((oneq),3) );
+        System.out.println("Value = " + value);
+        int ups = 3;
+        int n = 4;
+        double v = 0.0;
+        for(int i = 1; i < n; ++i) {
+            double inc = Math.pow(q,i) * Math.pow(1-q, n-ups);
+            v += inc;
+            --ups;
+        }
+        System.out.println("v = " + v);
+        double end = Math.pow(q,3) * Math.pow(1 - q,n - 3);
+        System.out.println("end = " + end);
+        double beg = Math.pow(q,1) * Math.pow(1 - q,n - 1);
+        System.out.println("end = " + end);
     }
 
 }

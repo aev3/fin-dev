@@ -103,35 +103,6 @@ public class Lattice
     }
 
 
-    public double[][] createOptionLattice2(int rows, int cols, double q,
-                                          double r, double s)
-    {
-
-        opt_lat = new double[rows][cols];
-
-        for(int i = cols; i >= 0 ; --i)
-        {
-            for(int j = rows; j >= 0 ; --j)
-            {
-                opt_lat[i][j] = Math.max(stk_lat[i][j] - s, 0.0);
-                //System.out.println("O: opt_lat[" + i + "][" + j + "] = " + opt_lat[i][j]);
-            }
-        }
-
-        for(int i = cols; i >= 0 ; --i)
-        {
-            for(int j = rows; j >= 0 ; --j)
-            {
-
-                opt_lat[i][j] = ((0.5570 * opt_lat[i+1][j+1]) + (1.0 - 0.5570) * opt_lat[i+1][j])/1.01;
-                //System.out.println("I: opt_lat[" + i + "][" + j + "] = " + opt_lat[i][j]);
-            }
-        }
-
-        return opt_lat;
-    }
-
-
     /**
      * Calculating the fair value of an European Option (Eo) in a 1 period
      * binomial model: {@latex.inline $ X = max[N_0, \\frac 1}{R}(q \\times N_d
@@ -149,259 +120,265 @@ public class Lattice
         NumberFormat formatter = NumberFormat.getInstance();
         Lattice lattice = new Lattice();
 
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t ECO.createStockLattice");
-        System.out.println("**************************************************");
-
-        EuropeanOptions ECO = new EuropeanOptions();
-        double[][] ECO_SL = ECO.createStockLattice(PS3Consts.EO_4_ROWS,
-                PS3Consts.EO_4_COLS, PS3Consts.EO_4_S0, PS3Consts.EO_4_U);
-        /*          */
-        System.out.println("Stock Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.EO_4_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.EO_4_COLS; ++j)
-            {
-                System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", ECO_SL[i][j]);
-            }
-            System.out.println();
-        }
-
-//        AmericanOptions ao = new AmericanOptions();
-//        double[][] rev_lat = ao.reverseLattice(ECOM);
-//        System.out.println("Reverse Stock Lattice from [0][0] to [3][3]:");
-//        for(int i = 0; i < PS3Consts.ECO_ROWS; ++i)
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t ECO_4.createStockLattice");
+//        System.out.println("**************************************************");
+//
+//        EuropeanOptions ECO_4 = new EuropeanOptions();
+//        double[][] ECO_4_SL = ECO_4.createStockLattice(PS3Consts.ECO_4_ROWS,
+//                PS3Consts.ECO_4_COLS,
+//                PS3Consts.ECO_4_S0,
+//                PS3Consts.ECO_4_U);
+//        /*          */
+//        System.out.println("Stock Lattice from [0][0] to [3][3]:");
+//        for(int i = 0; i < PS3Consts.ECO_4_ROWS; ++i)
 //        {
-//            for(int j = 0; j < PS3Consts.ECO_COLS; ++j)
+//            for(int j = 0; j < PS3Consts.ECO_4_COLS; ++j)
 //            {
 //                System.out.print("[" + i + "][" + j + "] =");
-//                System.out.printf("%9.4f ", rev_lat[i][j]);
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
-
-
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t ECO.createOptionLattice");
-        System.out.println("**************************************************");
-
-        double[][] ECO_OL = ECO.createOptionLattice(PS3Consts.EO_4_ROWS,
-                PS3Consts.EO_4_COLS, PS3Consts.EO_4_Q, PS3Consts.EO_4_R, PS3Consts.EO_4_STR);
-        System.out.println("Option Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.EO_4_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.EO_4_COLS; ++j)
-            {
-                System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", ECO_OL[i][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t ECO.createPricingLattice");
-        System.out.println("**************************************************");
-
-        double[][] ECO_PL = ECO.createPricingLattice(PS3Consts.EO_4_ROWS,
-                PS3Consts.EO_4_COLS, PS3Consts.EO_4_Q, PS3Consts.EO_4_R, PS3Consts.EO_4_STR);
-        System.out.println("Pricing Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.EO_4_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.EO_4_COLS; ++j)
-            {
-                System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", ECO_PL[i][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t APO_15.createStockLattice");
-        System.out.println("**************************************************");
-
-        AmericanOptions APO_15 = new AmericanOptions();
-        double[][] AO_SL = APO_15.createStockLattice(PS3Consts.APO_15_ROWS,
-                PS3Consts.APO_15_COLS,
-                PS3Consts.APO_15_S0,
-                PS3Consts.APO_15_U);
-        //System.out.println("Option Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.APO_15_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.APO_15_COLS; ++j)
-            {
-                //System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", AO_SL[i][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t APO_15.createOptionLattice");
-        System.out.println("**************************************************");
-
-        double[][] AO_OL = APO_15.createOptionLattice(PS3Consts.APO_15_ROWS,
-                PS3Consts.APO_15_COLS,
-                PS3Consts.APO_15_Q,
-                PS3Consts.APO_15_R,
-                PS3Consts.APO_15_K);
-        //System.out.println("Option Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.APO_15_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.APO_15_COLS; ++j)
-            {
-                //System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", AO_OL[i][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t APO_15.createPutPricingLattice");
-        System.out.println("**************************************************");
-
-        double[][] APO_OL2 = APO_15.createPutPricingLattice(PS3Consts.APO_15_ROWS,
-                PS3Consts.APO_15_COLS,
-                PS3Consts.APO_15_Q,
-                PS3Consts.APO_15_R,
-                PS3Consts.APO_15_K);
-        System.out.println("Option Lattice from [0][0] to [15][15]:");
-        for(int i = 0; i < PS3Consts.APO_15_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.APO_15_COLS; ++j)
-            {
-                //System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", APO_OL2[i][j]);
-            }
-            System.out.println();
-        }
-
-//        System.out.println("**************************************************");
-//        System.out.println("\t\t\t\t EO.createStockLattice");
-//        System.out.println("**************************************************");
-//
-//        AmericanOptions EO = new AmericanOptions();
-//        double[][] EO_SL = EO.createStockLattice(PS3Consts.EO_10_ROWS,
-//                PS3Consts.EO_10_COLS,
-//                PS3Consts.EO_10_S0,
-//                PS3Consts.EO_10_U);
-//        //System.out.println("Option Lattice from [0][0] to [3][3]:");
-//        for(int i = 0; i < PS3Consts.EO_10_ROWS; ++i)
-//        {
-//            for(int j = 0; j < PS3Consts.EO_10_COLS; ++j)
-//            {
-//                //System.out.print("[" + i + "][" + j + "] =");
-//                System.out.printf("%9.4f ", EO_SL[i][j]);
+//                System.out.printf("%9.4f ", ECO_4_SL[i][j]);
 //            }
 //            System.out.println();
 //        }
 
-//        System.out.println("**************************************************");
-//        System.out.println("\t\t\t\t EO.createOptionLattice");
-//        System.out.println("**************************************************");
-//
-//        double[][] EO_OL = EO.createOptionLattice(PS3Consts.EO_10_ROWS,
-//                PS3Consts.EO_10_COLS,
-//                PS3Consts.EO_10_Q,
-//                PS3Consts.EO_10_R,
-//                PS3Consts.EO_10_STR);
-//        //System.out.println("Option Lattice from [0][0] to [3][3]:");
-//        for(int i = 0; i < PS3Consts.EO_10_ROWS; ++i)
-//        {
-//            for(int j = 0; j < PS3Consts.EO_10_COLS; ++j)
-//            {
-//                //System.out.print("[" + i + "][" + j + "] =");
-//                System.out.printf("%9.4f ", EO_OL[i][j]);
-//            }
-//            System.out.println();
-//        }
 
 //        System.out.println("**************************************************");
-//        System.out.println("\t\t\t\t EO.createPutPricingLattice");
+//        System.out.println("\t\t\t\t ECO_4.createCallOptionLattice");
 //        System.out.println("**************************************************");
 //
-//        double[][] EO_10_OL = EO.createPutPricingLattice(PS3Consts.EO_10_ROWS,
-//                PS3Consts.EO_10_COLS,
-//                PS3Consts.EO_10_Q,
-//                PS3Consts.EO_10_R,
-//                PS3Consts.EO_10_STR);
+//        double[][] ECO_4_COL = ECO_4.createCallOptionLattice(PS3Consts.ECO_4_ROWS,
+//                PS3Consts.ECO_4_COLS,
+//                PS3Consts.ECO_4_Q,
+//                PS3Consts.ECO_4_R,
+//                PS3Consts.ECO_4_STR);
 //        System.out.println("Option Lattice from [0][0] to [3][3]:");
-//        for(int i = 0; i < PS3Consts.EO_10_ROWS; ++i)
+//        for(int i = 0; i < PS3Consts.ECO_4_ROWS; ++i)
 //        {
-//            for(int j = 0; j < PS3Consts.EO_10_COLS; ++j)
+//            for(int j = 0; j < PS3Consts.ECO_4_COLS; ++j)
+//            {
+//                System.out.print("[" + i + "][" + j + "] =");
+//                System.out.printf("%9.4f ", ECO_4_COL[i][j]);
+//            }
+//            System.out.println();
+//        }
+
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t ECO_4.createPutOptionLattice");
+//        System.out.println("**************************************************");
+//
+//        double[][] ECO_4_POL = ECO_4.createPutOptionLattice(PS3Consts.ECO_4_ROWS,
+//                PS3Consts.ECO_4_COLS,
+//                PS3Consts.ECO_4_Q,
+//                PS3Consts.ECO_4_R,
+//                PS3Consts.ECO_4_STR);
+//        System.out.println("Pricing Lattice from [0][0] to [3][3]:");
+//        for(int i = 0; i < PS3Consts.ECO_4_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.ECO_4_COLS; ++j)
+//            {
+//                System.out.print("[" + i + "][" + j + "] =");
+//                System.out.printf("%9.4f ", ECO_4_POL[i][j]);
+//            }
+//            System.out.println();
+//        }
+
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t APO_15.createStockLattice");
+//        System.out.println("**************************************************");
+//
+//        AmericanOptions APO_15 = new AmericanOptions();
+//        double[][] APO_15_SL = APO_15.createStockLattice(PS3Consts.APO_15_ROWS,
+//                PS3Consts.APO_15_COLS,
+//                PS3Consts.APO_15_S0,
+//                PS3Consts.APO_15_U);
+//        //System.out.println("Option Lattice from [0][0] to [3][3]:");
+//        for(int i = 0; i < PS3Consts.APO_15_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.APO_15_COLS; ++j)
 //            {
 //                //System.out.print("[" + i + "][" + j + "] =");
-//                System.out.printf("%9.4f ", EO_10_OL[i][j]);
+//                System.out.printf("%9.4f ", APO_15_SL[i][j]);
+//            }
+//            System.out.println();
+//        }
+
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t APO_15.createCallOptionLattice");
+//        System.out.println("**************************************************");
+//
+//        double[][] APO_15_COL = APO_15.createCallOptionLattice(PS3Consts.APO_15_ROWS,
+//                PS3Consts.APO_15_COLS,
+//                PS3Consts.APO_15_Q,
+//                PS3Consts.APO_15_R,
+//                PS3Consts.APO_15_K);
+//        //System.out.println("Option Lattice from [0][0] to [3][3]:");
+//        for(int i = 0; i < PS3Consts.APO_15_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.APO_15_COLS; ++j)
+//            {
+//                //System.out.print("[" + i + "][" + j + "] =");
+//                System.out.printf("%9.4f ", APO_15_COL[i][j]);
+//            }
+//            System.out.println();
+//        }
+
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t APO_15.createPutOptionLattice");
+//        System.out.println("**************************************************");
+//
+//        double[][] APO_15_POL = APO_15.createPutOptionLattice(PS3Consts.APO_15_ROWS,
+//                PS3Consts.APO_15_COLS,
+//                PS3Consts.APO_15_Q,
+//                PS3Consts.APO_15_R,
+//                PS3Consts.APO_15_K);
+//        System.out.println("Option Lattice from [0][0] to [15][15]:");
+//        for(int i = 0; i < PS3Consts.APO_15_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.APO_15_COLS; ++j)
+//            {
+//                //System.out.print("[" + i + "][" + j + "] =");
+//                System.out.printf("%9.4f ", APO_15_POL[i][j]);
 //            }
 //            System.out.println();
 //        }
 
         System.out.println("**************************************************");
-        System.out.println("\t\t\t\t APO_4.createStockLattice");
+        System.out.println("\t\t\t\t EPO_10.createStockLattice");
         System.out.println("**************************************************");
 
-        AmericanOptions APO = new AmericanOptions();
-        double[][] APO_4_SL = APO.createStockLattice(PS3Consts.APO_4_ROWS,
-                PS3Consts.APO_4_COLS,
-                PS3Consts.APO_4_S0,
-                PS3Consts.APO_4_U);
-        System.out.println("Option Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.APO_4_ROWS; ++i)
+        EuropeanOptions EPO_10 = new EuropeanOptions();
+        double[][] EPO_10_SL = EPO_10.createStockLattice(PS3Consts.EPO_10_ROWS,
+                PS3Consts.EPO_10_COLS,
+                PS3Consts.EPO_10_S0,
+                PS3Consts.EPO_10_U);
+        for(int i = 0; i < PS3Consts.EPO_10_ROWS; ++i)
         {
-            for(int j = 0; j < PS3Consts.APO_4_COLS; ++j)
+            for(int j = 0; j < PS3Consts.EPO_10_COLS; ++j)
             {
-                System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", APO_4_SL[i][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t APO_4.createOptionLattice");
-        System.out.println("**************************************************");
-
-        double[][] APO_4_OL = APO.createOptionLattice(PS3Consts.APO_4_ROWS,
-                PS3Consts.APO_4_COLS,
-                PS3Consts.APO_4_Q,
-                PS3Consts.APO_4_R,
-                PS3Consts.APO_4_STR);
-        System.out.println("Option Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.APO_4_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.APO_4_COLS; ++j)
-            {
-                System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", APO_4_OL[i][j]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("**************************************************");
-        System.out.println("\t\t\t\t APO_4.createPutPricingLattice");
-        System.out.println("**************************************************");
-
-        double[][] APO_4_PL = APO.createPutPricingLattice(PS3Consts.APO_4_ROWS,
-                PS3Consts.APO_4_COLS,
-                PS3Consts.APO_4_Q,
-                PS3Consts.APO_4_R,
-                PS3Consts.APO_4_STR);
-        System.out.println("Option Lattice from [0][0] to [3][3]:");
-        for(int i = 0; i < PS3Consts.APO_4_ROWS; ++i)
-        {
-            for(int j = 0; j < PS3Consts.APO_4_COLS; ++j)
-            {
-                System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", APO_4_PL[i][j]);
+                System.out.printf("%9.4f ", EPO_10_SL[i][j]);
             }
             System.out.println();
         }
 
 //        System.out.println("**************************************************");
-//        System.out.println("\t\t\t\t APO.reverse");
+//        System.out.println("\t\t\t\t EPO_10.createCallOptionLattice");
 //        System.out.println("**************************************************");
 //
-//        APO.reverse(APO_OL2);
+//        double[][] EPO_10_COL = EO_10.createCallOptionLattice(PS3Consts.EPO_10_ROWS,
+//                PS3Consts.EPO_10_COLS,
+//                PS3Consts.EPO_10_Q,
+//                PS3Consts.EPO_10_R,
+//                PS3Consts.EPO_10_STR);
+//
+//        for(int i = 0; i < PS3Consts.EPO_10_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.EPO_10_COLS; ++j)
+//            {
+//                System.out.printf("%9.4f ", EPO_10_COL[i][j]);
+//            }
+//            System.out.println();
+//        }
+
+        System.out.println("**************************************************");
+        System.out.println("\t\t\t\t EPO_10.createPutOptionLattice");
+        System.out.println("**************************************************");
+
+        double[][] EPO_10_POL = EPO_10.createPutOptionLattice(PS3Consts.EPO_10_ROWS,
+                PS3Consts.EPO_10_COLS,
+                PS3Consts.EPO_10_Q,
+                PS3Consts.EPO_10_R,
+                PS3Consts.EPO_10_STR);
+        System.out.println("Option Lattice from [0][0] to [3][3]:");
+        for(int i = 0; i < PS3Consts.EPO_10_ROWS; ++i)
+        {
+            for(int j = 0; j < PS3Consts.EPO_10_COLS; ++j)
+            {
+                //System.out.print("[" + i + "][" + j + "] =");
+                System.out.printf("%9.4f ", EPO_10_POL[i][j]);
+            }
+            System.out.println();
+        }
+
+        System.out.println("**************************************************");
+        System.out.println("\t\t\t\t EPO_10.createPutPayoffLattice");
+        System.out.println("**************************************************");
+
+        double[][] EPPO_10_POL = EPO_10.createPutPayoffLattice(PS3Consts.EPO_10_ROWS,
+                PS3Consts.EPO_10_COLS,
+                PS3Consts.EPO_10_Q,
+                PS3Consts.EPO_10_R,
+                PS3Consts.EPO_10_STR,
+                PS3Consts.EPO_10_T);
+        System.out.println("Put Payoff Lattice");
+        for(int i = 0; i < PS3Consts.EPO_10_ROWS; ++i)
+        {
+            for(int j = 0; j < PS3Consts.EPO_10_COLS; ++j)
+            {
+                System.out.print("[" + i + "][" + j + "] = ");
+                System.out.printf("%9.4f ", EPPO_10_POL[i][j]);
+            }
+            System.out.println();
+        }
+
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t APO_4.createStockLattice");
+//        System.out.println("**************************************************");
+//
+//        AmericanOptions APO_4 = new AmericanOptions();
+//        double[][] APO_4_SL = APO_4.createStockLattice(PS3Consts.APO_4_ROWS,
+//                PS3Consts.APO_4_COLS,
+//                PS3Consts.APO_4_S0,
+//                PS3Consts.APO_4_U);
+//        System.out.println("Option Lattice from [0][0] to [3][3]:");
+//        for(int i = 0; i < PS3Consts.APO_4_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.APO_4_COLS; ++j)
+//            {
+//                System.out.print("[" + i + "][" + j + "] =");
+//                System.out.printf("%9.4f ", APO_4_SL[i][j]);
+//            }
+//            System.out.println();
+//        }
+
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t APO_4.createOptionLattice");
+//        System.out.println("**************************************************");
+//
+//        double[][] APO_4_COL = APO_4.createCallOptionLattice(PS3Consts.APO_4_ROWS,
+//                PS3Consts.APO_4_COLS,
+//                PS3Consts.APO_4_Q,
+//                PS3Consts.APO_4_R,
+//                PS3Consts.APO_4_STR);
+//        System.out.println("Option Lattice from [0][0] to [3][3]:");
+//        for(int i = 0; i < PS3Consts.APO_4_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.APO_4_COLS; ++j)
+//            {
+//                System.out.print("[" + i + "][" + j + "] =");
+//                System.out.printf("%9.4f ", APO_4_COL[i][j]);
+//            }
+//            System.out.println();
+//        }
+
+//        System.out.println("**************************************************");
+//        System.out.println("\t\t\t\t APO_4.createPutOptionLattice");
+//        System.out.println("**************************************************");
+//
+//        double[][] APO_4_POL = APO_4.createPutOptionLattice(PS3Consts.APO_4_ROWS,
+//                PS3Consts.APO_4_COLS,
+//                PS3Consts.APO_4_Q,
+//                PS3Consts.APO_4_R,
+//                PS3Consts.APO_4_STR);
+//        System.out.println("Option Lattice from [0][0] to [3][3]:");
+//        for(int i = 0; i < PS3Consts.APO_4_ROWS; ++i)
+//        {
+//            for(int j = 0; j < PS3Consts.APO_4_COLS; ++j)
+//            {
+//                System.out.print("[" + i + "][" + j + "] =");
+//                System.out.printf("%9.4f ", APO_4_POL[i][j]);
+//            }
+//            System.out.println();
+//        }
 
    }
 
