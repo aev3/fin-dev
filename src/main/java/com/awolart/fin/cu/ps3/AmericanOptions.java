@@ -27,6 +27,12 @@ import static com.awolart.fin.cu.ps3.PS3Consts.S0;
  * <p/>
  * All final static variables are accessible from @{link PS3Consts}.
  * </p>
+ *
+ * <p>
+ * TODO:
+ * This class in still under construction as the results from the createCallPayoffLattice
+ * method are still not correct.
+ * </p>
  */
 public class AmericanOptions
 {
@@ -106,6 +112,70 @@ public class AmericanOptions
         return opt_lat;
     }
 
+
+    public double[][] createCallPayoffLattice(int rows, int cols, double q, double r,
+                                             double s, double T)
+    {
+        double[][] pay_lat = new double[rows][cols];
+
+        /*
+         * For this first column use max((strike - stk_lat[row][col]), 0.0
+         * XL=MAX($G$2*(L16-$G$3),0))
+         * G2=1 (call/put)
+         * G3=strike=100
+         * L16=stk_lat[R_n, C_n]
+         */
+        for(int row = 0; row < rows; ++row)
+        {
+            /*
+             * Define the last column data rows using the data from the stk_lat
+             * lattice
+             */
+            int col = cols-1;
+            //pay_lat[row][col] = Math.max(s - stk_lat[row][col], 0.0);
+            pay_lat[row][col] = Math.max((stk_lat[row][col])-s, 0.0);
+        }
+
+        /*
+         * For Row 5[XL=36] and Col 9[XL=30]:
+         * =IF($A36 <= K$30, ($B$10*L35+$B$11*L36)/EXP($B$6 * $B$3/$B$5),"")
+         * A36=R_n
+         * K30=C_n
+         *
+         */
+        //for(int row = 0; row <= rows-2; ++row)
+        for(int row = rows-2; row >= 0; --row)
+        {
+            for(int col = cols-2; col >= 0; --col)
+            {
+                if(row <= col)
+                {
+                    /* constant */
+                    int periods =  cols-1;
+                    double q_less = 1-q;
+                    double denom = Math.exp(r * T / periods );
+                    /* variable */
+                    double num_left = q * pay_lat[row+1][col+1];
+                    double num_right = q_less * pay_lat[row][col+1];
+                    pay_lat[row][col] = (num_left + num_right)/denom;
+                    //System.out.println("[" + row + "][" + col + "]:"
+                    //        + " num_right = " + num_right
+                    //        + ", num_left = " + num_left
+                    //        + ", denom = " + denom
+                    //        + ", and pay_lat[row][col] = " + pay_lat[row][col]
+                    //);
+                }
+                else
+                {
+                    pay_lat[row][col] = 0.0;
+                }
+            }
+
+        }
+
+        return pay_lat;
+
+    }
 
 
     public double[][] createPutOptionLattice(int rows, int cols, double q,

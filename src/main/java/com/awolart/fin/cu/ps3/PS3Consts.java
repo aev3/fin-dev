@@ -76,14 +76,19 @@ public class PS3Consts {
     public static final int APO_15_ROWS     = 16;
     public static final int APO_15_COLS     = 16;
     public static final double APO_15_S0    = 100.00;
-    public static final double APO_15_R     = 1.02;
-    public static final double APO_15_U     = 1.0395;
+    public static final double APO_15_R     = 0.02;
+    public static final double APO_15_U     = 1.03950034625931;
     public static final double APO_15_D     = 1/APO_15_U;
     public static final double APO_15_Q     = 0.5570;
     public static final double APO_15_K     = 110.00;
-    public static final double APO_15_C     = 1.01;
-    public static final double APO_15_sigma = 0.25;
+    public static final double APO_15_C     = 0.01;
+    public static final double APO_15_sigma = 0.30;
     public static final double APO_15_T     = 0.25;
+    /*
+    public static final double APO_15_sigma = 0.30;
+    public static final double APO_15_U     = Math.exp(APO_15_sigma * Math.sqrt(T/(APO_15_R-1)));
+    public static final double APO_15_D     = 1/APO_15_U;
+    */
 
     public static final int APO_4_ROWS      = 4;
     public static final int APO_4_COLS      = 4;
