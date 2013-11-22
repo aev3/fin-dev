@@ -4,11 +4,10 @@
 
 package com.awolart.fin.cu.ps3;
 
+import com.awolart.fin.cu.ps4.PS4Consts;
 import com.awolart.fin.cu.ps4.ShortRate;
 
-import static com.awolart.fin.cu.ps3.PS3Consts.EoC_ROWS;
 import static com.awolart.fin.cu.ps3.PS3Consts.S0;
-import static com.awolart.fin.cu.ps3.PS3Consts.u;
 
 import java.text.NumberFormat;
 
@@ -434,19 +433,19 @@ public class Lattice
         d=0.9 and
         q=1−q=1/2.
          */
-        ShortRate SR_10 = new ShortRate(10, 0.05, 1.1, 0.90);
-        SR_10.createLattice();
+        ShortRate SR_10 = new ShortRate();
+        Double[][] latt  = SR_10.getLattice(PS4Consts.Q1_props);
 
-//        System.out.println("Option Lattice from [0][0] to [3][3]:");
-//        for(int i = 0; i < PS3Consts.APO_4_ROWS; ++i)
-//        {
-//            for(int j = 0; j < PS3Consts.APO_4_COLS; ++j)
-//            {
-//                System.out.print("[" + i + "][" + j + "] =");
-//                System.out.printf("%9.4f ", APO_4_POL[i][j]);
-//            }
-//            System.out.println();
-//        }
+        System.out.println("Short Rate Lattice from [0][0] to [3][3]:");
+        for(int i = 0; i < 10; ++i)
+        {
+            for(int j = 0; j < 10; ++j)
+            {
+                System.out.print("[" + i + "][" + j + "] =");
+                System.out.printf("%9.4f ", latt[i][j]);
+            }
+            System.out.println();
+        }
     }
 
 

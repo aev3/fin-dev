@@ -4,42 +4,37 @@
 
 package com.awolart.fin.cu.ps4;
 
-public class ShortRate extends AbstractLattice
+import java.util.Properties;
+
+import static com.awolart.fin.cu.ps3.PS3Consts.S0;
+
+public class ShortRate // extends AbstractLattice
 {
 
-    private double r, u, d;
-
-    public ShortRate(int n, double r, double u, double d)
+    public Double[][] getLattice(Properties props)
     {
-        super(n + 1);
-        this.r = r;
-        this.u = u;
-        this.d = d;
-        createLattice();
-
+        Integer rows = Integer.parseInt(props.getProperty("rows"));
+        Integer cols = Integer.parseInt(props.getProperty("cols"));
+        Double rate = Double.parseDouble(props.getProperty("rate"));
+        Double up = Double.parseDouble(props.getProperty("up"));
+        Double down = Double.parseDouble(props.getProperty("down"));
+        Double q = Double.parseDouble(props.getProperty("q"));
+        Double[][] lattice = new Double[rows][cols];
+        lattice = createLattice(rows, cols, rate, up, down, q);
+        return lattice;
     }
 
-    public void createLattice()
+    public Double[][] createStockLattice(int rows, int cols, double s0,
+                                         double up)
     {
-        lattice[0][0] = r;
-        for(int i = 1; i < n + 1; i++)
-        {
-            lattice[0][i] = lattice[0][i - 1] * this.u;
-            for(int j = 1; j < n; j++)
-            {
-                lattice[j][i] = lattice[j - 1][i - 1] * this.d;
-            }
-        }
-        System.out.println("Short Rate Lattice:");
-        for(int i = 0; i < super.n; ++i)
-        {
-            for(int j = 0; j < super.n; ++j)
-            {
-                //System.out.print("[" + i + "][" + j + "] =");
-                System.out.printf("%9.4f ", lattice[i][j]);
-            }
-            System.out.println();
-        }
+        Double[][] lattice = new Double[rows][cols];
+        return lattice;
     }
 
+    public Double[][] createLattice(Integer rows, Integer cols, Double rate,
+                                    Double up, Double down, Double q)
+    {
+       Double[][] lattice = new Double[rows][cols];
+       return lattice;
+    }
 }

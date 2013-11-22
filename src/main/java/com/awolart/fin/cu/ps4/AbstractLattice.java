@@ -10,13 +10,13 @@ package com.awolart.fin.cu.ps4;
 abstract public class AbstractLattice
 {
 
-    protected double[][] lattice;
+    protected Double[][] lattice;
 
     protected int n;
 
     public AbstractLattice(int n)
     {
-        lattice = new double[n + 1][n + 1];
+        lattice = new Double[n + 1][n + 1];
         this.n = n;
     }
 

@@ -18,7 +18,7 @@ public class PS4Consts {
      * d = 0.9, and
      * q=1−q=1/2
      */
-    static Properties Q1_props = new Properties();
+    public static Properties Q1_props = new Properties();
     static {
         Q1_props.setProperty("rows", "10");
         Q1_props.setProperty("cols", "10");
