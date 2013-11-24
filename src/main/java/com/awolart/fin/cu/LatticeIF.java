@@ -4,12 +4,29 @@
 
 package com.awolart.fin.cu;
 
+import java.util.Properties;
+
 /**
  * <p>
+ *     A simple interface for lattice implementations.
  * </p>
  */
 public interface LatticeIF {
 
-    public double[][] createLattice(int rows, int cols);
+    /**
+     * <p>
+     *     The sole method required to be implemented by all LatticeUtility objects.
+     *     This method creates and returns a lattice populated with the data
+     *     required for its intended use.
+     * </p>
+     *
+     * @param props A Properties object that contains all the data necessary
+     *              to create a lattice.
+     *
+     * @return  double[][] matrix containing the row and column data for the
+     *          lattice.
+     *
+     */
+    public double[][] getLattice(Properties props);
 
 }

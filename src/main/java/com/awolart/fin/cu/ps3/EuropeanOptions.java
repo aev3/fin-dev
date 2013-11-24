@@ -7,6 +7,9 @@ package com.awolart.fin.cu.ps3;
 import static com.awolart.fin.cu.ps3.PS3Consts.S0;
 
 /**
+ * TODO: This class is primarily for testing lattice construction.
+ * TODO: It should be considered unreliable without further testing.
+ *
  * <p>
  * Build a 15-period binomial model lattice whose parameters should be
  * calibrated to a Black-Scholes geometric Brownian motion model with:
@@ -59,40 +62,6 @@ public class EuropeanOptions
                 for(int k = 1; k < stk_lat.length; ++k)
                 {
                     stk_lat[i][k] = S0 * Math.pow((1/up), k);
-                }
-            }
-        }
-
-        return stk_lat;
-    }
-    public double[][] createStockLattice2(int rows, int cols, double s0,
-            double up)
-    {
-        stk_lat = new double[rows][cols];
-        for(int i = 0; i <= stk_lat.length; ++i)
-        {
-            if(i == 0)
-            {
-                stk_lat[0][0] = s0;
-
-                for(int k = 1; k < stk_lat.length; ++k)
-                {
-                    stk_lat[i][k] = S0 * Math.pow((1 / up), k);
-                }
-            }
-            else
-            {
-                int limit = stk_lat[i - 1].length;
-                for(int j = i; j < limit; ++j)
-                {
-                    if(j == i)
-                    {
-                        stk_lat[i][j] = s0 * Math.pow((up), j);
-                    }
-                    else
-                    {
-                        stk_lat[i][j] = (stk_lat[i - 1][j - 1]) * up;
-                    }
                 }
             }
         }
@@ -189,30 +158,6 @@ public class EuropeanOptions
             }
         }
 
-        /*
-        for(int i = rows - 2; i >= 0; --i)
-        {
-            for(int j = cols - 2; j >= 0; --j)
-            {
-                double MM;
-                if(stk_lat[i][j] == 0.0 || stk_lat[i][j] < 0)
-                {
-                    MM = Math.max((q * opt_lat[i + 1][j] + (1 - q)
-                            * opt_lat[i][j])
-                            * (1 / r), 0.0);
-                }
-                else
-                {
-                    MM = Math.max(Math.max((s - stk_lat[i][j]), 0.0), (q
-                            * opt_lat[i + 1][j + 1] + (1 - q)
-                            * opt_lat[i][j + 1])
-                            * (1 / r));
-                }
-                opt_lat[i][j] = MM;
-            }
-        }
-            */
-
         return opt_lat;
     }
 
@@ -282,21 +227,6 @@ public class EuropeanOptions
 
         return pay_lat;
 
-    }
-
-    /**
-     * Calculating the fair value of an European Option (Eo) in a 1 period
-     * binomial model: {@latex.inline $ X = max[N_0, \\frac 1}{R}(q \\times N_d
-     * + (1 - q) \\times N_u) $}
-     */
-    public double calculateFairValueEo()
-    {
-        double fv = 0.0;
-        return fv;
-    }
-
-    public static void main(String[] args)
-    {
     }
 
 }

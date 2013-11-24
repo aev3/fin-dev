@@ -5,11 +5,27 @@
 package com.awolart.fin.cu;
 
 /**
+ /**
  * <p>
+ * A simple class that implements the abstract factory design pattern for the
+ * classes that implement the LatticeIF interface.
  * </p>
  */
 public interface LatticeFactoryIF {
 
-    public LatticeIF getImplementation(LatticeTypes type);
+    /**
+     * <p>
+     * Default getImplementation method that takes a LatticeType and
+     * instantiates the appropriate LatticeIF implementation.
+     * </p>
+     *
+     * @param type
+     *            A LatticeType that is used to determine which LatticeIF
+     *            implementation to instantiate.
+     *
+     * @return LatticeIF - implementation class
+     *
+     */
+    public LatticeIF getImplementation(LatticeType type);
 
 }
