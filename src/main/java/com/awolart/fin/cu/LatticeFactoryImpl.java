@@ -4,9 +4,7 @@
 
 package com.awolart.fin.cu;
 
-import com.awolart.fin.cu.ps4.AmericanCallZeroLatticeImpl;
-import com.awolart.fin.cu.ps4.ShortRateLatticeImpl;
-import com.awolart.fin.cu.ps4.ZeroCouponBondLatticeImpl;
+import com.awolart.fin.cu.ps4.*;
 
 /**
  * <p>
@@ -65,6 +63,30 @@ public class LatticeFactoryImpl implements LatticeFactoryIF
             case AMER_CALL_ZERO:
             {
                 this.implementation = new AmericanCallZeroLatticeImpl();
+                break;
+            }
+
+            case BOND_FORWARD:
+            {
+                this.implementation = new BondForwardImpl();
+                break;
+            }
+
+            case BOND_FUTURES:
+            {
+                this.implementation = new BondFuturesImpl();
+                break;
+            }
+
+            case SWAP:
+            {
+                this.implementation = new SwapImpl();
+                break;
+            }
+
+            case SWAPTION:
+            {
+                this.implementation = new SwaptionImpl();
                 break;
             }
 

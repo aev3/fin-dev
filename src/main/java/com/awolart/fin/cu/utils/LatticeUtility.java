@@ -12,7 +12,10 @@ import com.awolart.fin.cu.ps3.PS3Consts;
 import com.awolart.fin.cu.ps4.PS4Consts;
 
 import static com.awolart.fin.cu.ps4.PS4Consts.Q1_PROPS;
+import static com.awolart.fin.cu.ps4.PS4Consts.Q2_PROPS;
 import static com.awolart.fin.cu.ps4.PS4Consts.Q4_PROPS;
+import static com.awolart.fin.cu.ps4.PS4Consts.Q5_PROPS;
+import static com.awolart.fin.cu.ps4.PS4Consts.Q6_PROPS;
 
 
 /**
@@ -36,7 +39,7 @@ public class LatticeUtility
                     System.out.print("[" + i + "][" + j + "] =");
                 }
 
-                System.out.printf("%9.4f ", lattice[i][j]);
+                System.out.printf("%9.8f ", lattice[i][j]);
 
             }
 
@@ -58,18 +61,38 @@ public class LatticeUtility
         */
         LatticeFactoryIF factory = new LatticeFactoryImpl();
 
-        LatticeIF shortRateImpl = factory.getImplementation(LatticeType.SHORT_RATE);
-        double[][] sr_latt  = shortRateImpl.getLattice(Q1_PROPS);
-        LatticeUtility.printLattice(sr_latt, "Short Rate Lattice:", false);
+        //LatticeIF shortRateImpl = factory.getImplementation(LatticeType.SHORT_RATE);
+        //double[][] sr_latt  = shortRateImpl.getLattice(Q1_PROPS);
+        //LatticeUtility.printLattice(sr_latt, "Short Rate Lattice:", false);
 
+        //LatticeIF zeroCouponBondImpl = factory.getImplementation(LatticeType.ZERO_COUPON_BOND);
+        //double[][] zcb_latt  = zeroCouponBondImpl.getLattice(Q1_PROPS);
+        //LatticeUtility.printLattice(zcb_latt, "Zero Coupon Bond Lattice:", false);
 
-        LatticeIF zeroCouponBondImpl = factory.getImplementation(LatticeType.ZERO_COUPON_BOND);
-        double[][] zcb_latt  = zeroCouponBondImpl.getLattice(Q1_PROPS);
-        LatticeUtility.printLattice(zcb_latt, "Zero Coupon Bond Lattice:", false);
+        //LatticeIF zeroCouponBondImpl = factory.getImplementation(LatticeType.ZERO_COUPON_BOND);
+        //double[][] zcb_latt  = zeroCouponBondImpl.getLattice(Q2_PROPS);
+        //LatticeUtility.printLattice(zcb_latt, "Zero Coupon Bond Lattice:", false);
 
-        LatticeIF americanCallZcbImpl = factory.getImplementation(LatticeType.AMER_CALL_ZERO);
-        double[][] amer_call_zcb_latt  = americanCallZcbImpl.getLattice(Q4_PROPS);
-        LatticeUtility.printLattice(amer_call_zcb_latt, "American Call ZCB Lattice:", false);
+        //LatticeIF bondForwardImpl = factory.getImplementation(LatticeType.BOND_FORWARD);
+        //double[][] bond_fwd_latt  = bondForwardImpl.getLattice(Q2_PROPS);
+        //LatticeUtility.printLattice(bond_fwd_latt, "Bond Forward ZCB Lattice:", false);
+
+        //LatticeIF bondFuturesImpl = factory.getImplementation(LatticeType.BOND_FUTURES);
+        //double[][] bond_fut_latt  = bondFuturesImpl.getLattice(Q3_PROPS);
+        //LatticeUtility.printLattice(bond_fut_latt, "Bond Futures ZCB Lattice:", false);
+
+        //LatticeIF americanCallZcbImpl = factory.getImplementation(LatticeType.AMER_CALL_ZERO);
+        //double[][] amer_call_zcb_latt  = americanCallZcbImpl.getLattice(Q4_PROPS);
+        //LatticeUtility.printLattice(amer_call_zcb_latt, "American Call ZCB Lattice:", false);
+
+        LatticeIF swapImpl = factory.getImplementation(LatticeType.SWAP);
+        double[][] swap_latt  = swapImpl.getLattice(Q5_PROPS);
+        LatticeUtility.printLattice(swap_latt, "Swap Lattice:", false);
+
+        //LatticeIF swaptionImpl = factory.getImplementation(LatticeType.SWAPTION);
+        //double[][] swaption_latt  = swaptionImpl.getLattice(Q6_PROPS);
+        //LatticeUtility.printLattice(swaption_latt, "Swaption Lattice:", false);
+
     }
 
 }

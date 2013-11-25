@@ -4,7 +4,6 @@
 
 package com.awolart.fin.cu.ps2;
 
-import com.awolart.fin.irc.PresentValue;
 
 import java.text.NumberFormat;
 
@@ -18,7 +17,6 @@ import java.text.NumberFormat;
  * i.e., if your answer is 4.567% or equivalently 0.04567,
  * then submit answer as 4.57.
  * <p/>
- * r = 1−d(0,T) / ∑T t=1 d(0,t)
  */
 public class FixedRateSwapZero {
 
@@ -26,6 +24,7 @@ public class FixedRateSwapZero {
      * <p>
      * Method to calculate the discount rate {@latex.inline $ d(0,4) $}
      * where {@latex.inline $ d(0,4) = \\frac{1}{(1 + r)^t} $}
+     * More generically, {@latex.inline $ r =  \\frac{1 - d(0,T)}{\\sum_{t0}^{T} d(0,T)}  $}
      * </p>
      *
      * @param s double representing the spot interest rate at time {@latex.inline $ t $}
