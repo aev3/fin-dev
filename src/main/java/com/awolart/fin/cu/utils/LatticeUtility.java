@@ -85,13 +85,13 @@ public class LatticeUtility
         //double[][] amer_call_zcb_latt  = americanCallZcbImpl.getLattice(Q4_PROPS);
         //LatticeUtility.printLattice(amer_call_zcb_latt, "American Call ZCB Lattice:", false);
 
-        LatticeIF swapImpl = factory.getImplementation(LatticeType.SWAP);
-        double[][] swap_latt  = swapImpl.getLattice(Q5_PROPS);
-        LatticeUtility.printLattice(swap_latt, "Swap Lattice:", false);
+        //LatticeIF swapImpl = factory.getImplementation(LatticeType.SWAP);
+        //double[][] swap_latt  = swapImpl.getLattice(Q5_PROPS);
+        //LatticeUtility.printLattice(swap_latt, "Swap Lattice:", false);
 
-        //LatticeIF swaptionImpl = factory.getImplementation(LatticeType.SWAPTION);
-        //double[][] swaption_latt  = swaptionImpl.getLattice(Q6_PROPS);
-        //LatticeUtility.printLattice(swaption_latt, "Swaption Lattice:", false);
+        LatticeIF swaptionImpl = factory.getImplementation(LatticeType.SWAPTION);
+        double[][] swaption_latt  = swaptionImpl.getLattice(Q6_PROPS);
+        LatticeUtility.printLattice(swaption_latt, "Swaption Lattice:", false);
 
     }
 

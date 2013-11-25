@@ -82,27 +82,22 @@ public class SwapImpl implements LatticeIF
         LatticeIF short_rate_impl = factory.getImplementation(LatticeType.SHORT_RATE);
         double[][] short_rate_latt = short_rate_impl.getLattice(PS4Consts.Q1_PROPS);
 
-
-        //LatticeIF zcb_impl = factory.getImplementation(LatticeType.ZERO_COUPON_BOND);
-        //double[][] zcb_latt = zcb_impl.getLattice(PS4Consts.Q1_PROPS);
-
         double[][] lattice = new double[rows][cols];
 
         double q_less = 1 - q;
 
         /*
          * Generate the last column
-         * Excel: @r0,cn =(G16-$C$20)/(1+G16)
          */
         for(int row = rows - 1; row >= 0; --row)
         {
+            //XL = (G16-$C$20)/(1+G16)
             int col = cols - 1;
             lattice[row][col] = (short_rate_latt[row][col]-fixed_rate)/(1 + short_rate_latt[row][col]);
             --col;
         }
         /*
          * Generate data for all remaining columns where col <= cols-2:
-         * Excel: @r0,cn-1 =IF($A29 <=F$23,  ((F16-$C$20)+$B$5*G28 + $B$6*G29 )/(1+F16 ),"")
          */
         for(int col = cols - 2; col >= 0; --col)
         {
@@ -119,22 +114,22 @@ public class SwapImpl implements LatticeIF
                      * You should assume a swap notional of 1 million and assume that
                      * you receive floating and pay fixed.
                      */
-                    lattice[row][col] =  ((short_rate_latt[row][col] - fixed_rate)
-                            + q * lattice[row + 1][col + 1] + q_less * lattice[row][col + 1])
-                            /(1 + short_rate_latt[row][col]);
+                    if(col == 0)
+                    {
+                        // XL = IF($A39 <=B$28,  ($B$5*C38 + $B$6*C39 )/(1+B21 ),"
+                        lattice[row][col] =  (q * lattice[row + 1][col + 1] + q_less * lattice[row][col + 1])
+                                /(1 + short_rate_latt[row][col]);
+                    }
 
-//                    if(col == 0)
-//                    {
-//                        lattice[row][col] =  ((short_rate_latt[row][col])
-//                                + q * lattice[row + 1][col + 1] + q_less * lattice[row][col + 1])
-//                                /(1 + short_rate_latt[row][col]);
-//                    }
-//                    else
-//                    {
-//                        lattice[row][col] =  ((short_rate_latt[row][col] - fixed_rate)
-//                                + q * lattice[row + 1][col + 1] + q_less * lattice[row][col + 1])
-//                                /(1 + short_rate_latt[row][col]);
-//                    }
+                    else
+                    {
+                        // XL = IF($A39 <=C$28,  ((C21-$C$25)+$B$5*D38 + $B$6*D39 )/(1+C21 ),""
+                        double sr =  short_rate_latt[row][col];
+                        lattice[row][col] = ( (sr - fixed_rate)
+                                + q * lattice[row + 1][col + 1] + q_less * lattice[row][col + 1])
+                                /(1 + sr);
+                    }
+
                 }
             }
 

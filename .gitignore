@@ -130,6 +130,12 @@ project/plugins/project/
 .worksheet
 
 ########################
+#  javadocs specific   #
+########################
+javadocs/
+docs/
+
+########################
 #      GO specific     #
 ########################
 
