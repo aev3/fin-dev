@@ -24,12 +24,12 @@ public class TermStructureDiscountRate {
 
     /**
      * <p>
-     * Method to calculate the discount rate {@latex.inline $ d(0,4) $}
-     * where {@latex.inline $ d(0,4) = \\frac{1}{(1 + r)^t} $}
+     * Method to calculate the discount rate $ d(0,4) $
+     * where $ d(0,4) = \frac{1}{(1 + r)^t} $
      * </p>
      *
-     * @param s double representing the spot interest rate at time {@latex.inline $ t $}
-     * @param t double representing the time {@latex.inline $ t $}
+     * @param s double representing the spot interest rate at time $ t $
+     * @param t double representing the time $ t $
      * @return double containing the calculated discount rate
      */
     public static double discountRate(double s, double t) {

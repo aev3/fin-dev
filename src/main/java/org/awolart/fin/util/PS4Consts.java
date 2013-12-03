@@ -2,7 +2,7 @@
  *  Copyright (c) 2013 AWOLart.com
  */
 
-package com.awolart.fin.cu.ps4;
+package org.awolart.fin.util;
 
 import java.util.Properties;
 
@@ -10,7 +10,8 @@ import java.util.Properties;
  * A simple class that holds the constant values that will be used by Questions
  * in Problem Set 4.
  */
-public class PS4Consts {
+public class PS4Consts
+{
 
     /*
      * Build an n=10-period binomial model for the short-rate, ri,j.

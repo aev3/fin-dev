@@ -278,8 +278,8 @@ public class AmericanOptions
 
     /**
      * Calculating the fair value of an European Option (Eo) in a 1 period
-     * binomial model: {@latex.inline $ X = max[N_0, \\frac 1}{R}(q \\times N_d
-     * + (1 - q) \\times N_u) $}
+     * binomial model: $ X = max[N_0, \frac{1}{R}(q \times N_d
+     * + (1 - q) \times N_u) $
      */
     public double calculateFairValueEo()
     {

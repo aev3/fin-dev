@@ -2,20 +2,14 @@
  *  Copyright (c) 2013 AWOLart.com
  */
 
-package com.awolart.fin.cu.utils;
+package org.awolart.fin.util;
+
+import static com.awolart.fin.cu.ps4.PS4Consts.Q6_PROPS;
 
 import com.awolart.fin.cu.LatticeFactoryIF;
 import com.awolart.fin.cu.LatticeFactoryImpl;
 import com.awolart.fin.cu.LatticeIF;
 import com.awolart.fin.cu.LatticeType;
-import com.awolart.fin.cu.ps3.PS3Consts;
-import com.awolart.fin.cu.ps4.PS4Consts;
-
-import static com.awolart.fin.cu.ps4.PS4Consts.Q1_PROPS;
-import static com.awolart.fin.cu.ps4.PS4Consts.Q2_PROPS;
-import static com.awolart.fin.cu.ps4.PS4Consts.Q4_PROPS;
-import static com.awolart.fin.cu.ps4.PS4Consts.Q5_PROPS;
-import static com.awolart.fin.cu.ps4.PS4Consts.Q6_PROPS;
 
 
 /**

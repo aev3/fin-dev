@@ -31,8 +31,7 @@ public class SimpleFutures {
     /**
      * Convenience main method to facilitate command line/ide testing.
      *
-     * @par
-     * am args
+     * @param args
      */
     public static void main(String[] args) {
 

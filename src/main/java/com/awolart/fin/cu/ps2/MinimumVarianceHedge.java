@@ -48,17 +48,17 @@ public class MinimumVarianceHedge {
      * Using the Hull formula from Hull:
      * ``Option, Futures, and other Derivatives'',
      * for calculating the optimal hedge ratio:
-     * {@latex.inline $ h = \\rho \\frac{\\delta S}{\\delta F} $ }
-     * Where {@latex.inline $ \\rho $} is the correlation,
-     * {@latex.inline $ \\delta S $ } is the
+     * $ h = \rho \frac{\delta S}{\delta F} $
+     * Where $ \rho $ is the correlation,
+     * $ \delta S $  is the
      * standard deviation of the spot, and
-     * {@latex.inline $\\delta F $ } is the standard
+     * $\delta F $  is the standard
      * deviation of the futures contract.
      * <p/>
      * The optimal number of contracts is calculated as
-     * {@latex.inline $N = \\frac{h \\times QA}{QF} $ }
-     * where {@latex.inline $ QA $ } is the size of the position
-     * one wishes to hedge, and {@latex.inline $ QF $ }
+     * $N = \frac{h \times QA}{QF} $
+     * where $ QA $  is the size of the position
+     * one wishes to hedge, and $ QF $ 
      * is the size of the futures contract.
      */
     // double correlation, double sdS, double sdF
@@ -76,9 +76,9 @@ public class MinimumVarianceHedge {
      *
      * Using the formula in the module slides, the minimum-variance hedge
      * is given by
-     * {@latex.inline $ h∗ = \\frac{150000}{15000} \\times \\frac{cov(S_t^G,S_t^O)}{var(S_t^G)} $ }
+     * $ h∗ = \frac{150000}{15000} \times \frac{cov(S_t^G,S_t^O)}{var(S_t^G)} $
      * or
-     * {@latex.inline $ 10 \\times \\frac{\\rho \\delta G}{\\delta O} = 10 \\times \\frac{(0.7)(0.25)}{0.20}  = 8.75 $ }
+     * $ 10 \times \frac{\rho \delta G}{\delta O} = 10 \times \frac{(0.7)(0.25)}{0.20}  = 8.75 $
      * @return
      */
     public static double garud() {
@@ -90,8 +90,7 @@ public class MinimumVarianceHedge {
     /**
      * Convenience main method to facilitate command line/ide testing.
      *
-     * @par
-     * am args
+     * @param args
      */
     public static void main(String[] args) {
 

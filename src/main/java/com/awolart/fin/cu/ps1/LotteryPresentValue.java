@@ -22,16 +22,20 @@ import java.util.Locale;
 public class LotteryPresentValue
 {
 
-
-
     /**
-     * Here's a simple formula for calculating the present value (PV) of any future value (FV) received t years from
-     * now, assuming that the interest rate is r.
-     * PV = FV/(1 + r)t
-     * To find out to find out the present value of Joe's lottery winnings before taxes, have your students calculate
-     * the rest of the values in the first column, then sum the total.
-     * To find out to find out the present value of Joe's lottery winnings before taxes, have your students calculate
-     * the rest of the values in the first column, then sum the total, to wit:
+     * <p>
+     * Here's a simple formula for calculating the present value (PV) of any
+     * future value (FV) received t years from now, assuming that the interest
+     * rate is r. The calculation of the present value, PV, of a future stream
+     * of payments, each a p, would be
+     * $$ PV = \frac{p}{1 + r} \times t $$
+     * <p/>
+     * To find out to find out the present value of Joe's lottery winnings
+     * before taxes, have your students calculate the rest of the values in the
+     * first column, then sum the total. To find out to find out the present
+     * value of Joe's lottery winnings before taxes, have your students
+     * calculate the rest of the values in the first column, then sum the total,
+     * to wit:
      * PV = $100,000/(1.07)2 = $87,344
      *
      * @param C - double representing the payment amount
