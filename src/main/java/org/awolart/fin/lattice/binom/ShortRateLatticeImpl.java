@@ -4,9 +4,9 @@
 
 package org.awolart.fin.lattice.binom;
 
-import java.util.Properties;
+import org.awolart.fin.lattice.LatticeIF;
 
-import com.awolart.fin.cu.LatticeIF;
+import java.util.Properties;
 
 /**
  * <p>

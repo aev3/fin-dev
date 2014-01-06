@@ -50,15 +50,6 @@ public class LatticeUtility
 
     public static void main(String[] args)
     {
-        /*
-        Each of the following questions should be answered by building an n=10-period
-        binomial model for the short-rate, ri,j.
-        The lattice parameters are:
-        r0,0=5%,
-        u=1.1,
-        d=0.9 and
-        q=1−q=1/2.
-        */
         LatticeFactoryIF factory = new LatticeFactoryImpl();
 
         //LatticeIF shortRateImpl = factory.getImplementation(LatticeType.SHORT_RATE);

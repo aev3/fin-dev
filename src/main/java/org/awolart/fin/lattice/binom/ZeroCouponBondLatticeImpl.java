@@ -6,7 +6,8 @@ package org.awolart.fin.lattice.binom;
 
 import java.util.Properties;
 
-import com.awolart.fin.cu.LatticeIF;
+import org.awolart.fin.lattice.LatticeIF;
+
 
 /**
  * <p>

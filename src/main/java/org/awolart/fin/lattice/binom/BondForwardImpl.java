@@ -6,11 +6,12 @@ package org.awolart.fin.lattice.binom;
 
 import java.util.Properties;
 
-import com.awolart.fin.cu.LatticeFactoryIF;
-import com.awolart.fin.cu.LatticeFactoryImpl;
-import com.awolart.fin.cu.LatticeIF;
-import com.awolart.fin.cu.LatticeType;
-import com.awolart.fin.cu.ps4.PS4Consts;
+import org.awolart.fin.lattice.LatticeFactoryIF;
+import org.awolart.fin.lattice.LatticeFactoryImpl;
+import org.awolart.fin.lattice.LatticeIF;
+import org.awolart.fin.lattice.LatticeType;
+import org.awolart.fin.util.PS4Consts;
+
 
 /**
  * <p>

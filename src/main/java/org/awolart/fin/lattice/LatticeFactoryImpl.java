@@ -4,7 +4,13 @@
 
 package org.awolart.fin.lattice;
 
-import com.awolart.fin.cu.ps4.*;
+import org.awolart.fin.lattice.binom.AmericanCallZeroLatticeImpl;
+import org.awolart.fin.lattice.binom.BondForwardImpl;
+import org.awolart.fin.lattice.binom.BondFuturesImpl;
+import org.awolart.fin.lattice.binom.ShortRateLatticeImpl;
+import org.awolart.fin.lattice.binom.SwapImpl;
+import org.awolart.fin.lattice.binom.SwaptionImpl;
+import org.awolart.fin.lattice.binom.ZeroCouponBondLatticeImpl;
 
 /**
  * <p>
